@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+{% load staticfiles %}
+{% block content %}
+<br><br>
+<div class="container">
+  <table class="table table-striped">
+
+    <thead>
+      <th>Year</th>
+      <th>Winner</th>
+      <th>Points</th>
+      <th>Jersey</th>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>2015</td>
+        <td>Magnus Martinsen</td>
+        <td>4679</td>
+        <td><img src="{% static 'logos/minnesota-vikings-logo-vector.png' %}" alt="" style="width:50px;height:50px;"> 5 - Teddy Bridgewater </td>
+      </tr>
+
+      <tr>
+        <td>2016</td>
+        <td>Conor Spicer</td>
+        <td>5101</td>
+        <td><img src="{% static 'logos/jacksonville-jaguars-vector-logo.png' %}" alt="" style="width:50px;height:50px;">  11 - Allen Hurns </td>
+      </tr>
+
+    </tbody>
+
+  </table>
+</div>
+
+<section class="mbr-section" id="msg-box4-1" style="background-color: rgb(242, 242, 242); padding-top: 120px; padding-bottom: 120px;">
+
+    <div class="container">
+        <div class="row">
+            <div class="mbr-table-md-up">
+
+              <div class="mbr-table-cell mbr-right-padding-md-up mbr-valign-top col-md-7 image-size" style="width: 50%;">
+                  <div class="mbr-figure"><iframe class="mbr-embedded-video" src="https://www.youtube.com/embed/K3SlVsdUuBY" width="1280" height="720" frameborder="0" allowfullscreen></iframe></div>
+              </div>
+
+
+              <div class="mbr-table-cell col-md-5 text-xs-center text-md-left content-size">
+                  <h3 class="mbr-section-title display-2">ITS DRAFT DAY!!</h3>
+
+
+                  <div><a class="btn btn-primary" href="https://www.google.co.uk/search?hl=en&q=draft+day&meta=">MORE</a></div>
+              </div>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}

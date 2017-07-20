@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<hr><hr><hr>
+<div class="container">
+  <h3>SELECT PLAYOFF TEAMS</h3>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <table class="table">
+      <th><img src="{% static 'images/AFC.png' %}" style="width:40px;height:40px;">AFC</th>
+      <th></th>
+      <th><img src="{% static 'images/NFC.png' %}" style="width:40px;height:40px;">NFC</th>
+      <th></th>
+
+
+      <tr>
+      {% for field in form %}
+          <td>{{field.label|upper}}</td><td>{{field}}</td>   
+        {% if forloop.counter|divisibleby:2 %}</tr><tr>{% endif %}
+
+      {% endfor %}
+    </tr>
+    </table>
+
+    <input type="submit" class='btn btn-primary' value="Submit">
+
+  </form>
+</div>
+{% endblock %}

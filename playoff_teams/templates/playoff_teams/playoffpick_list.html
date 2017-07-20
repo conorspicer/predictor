@@ -1,0 +1,82 @@
+{% extends 'picks/pick_base.html' %}
+{% load static %}
+{% load staticfiles %}
+{% block picks_content %}
+
+
+<div class="container">
+
+
+
+<table class="table table-striped">
+  <thead>
+    <th><img src="{% static 'images/AFC.png' %}" style="width:40px;height:40px;"> AFC</th>
+    <th>TEAM</th>
+    <th></th>
+    <th></th>
+    <th><img src="{% static 'images/NFC.png' %}" style="width:40px;height:40px;"> NFC</th>
+    <th>TEAM</th>
+  </thead>
+  <tbody>
+    {% for pick in object_list %}
+    <h5>PLAYOFF TEAMS AS PICKED BY <strong>@{{pick.user.username}}</strong></h5>
+
+    <tr>
+      <td>AFC NORTH</td>
+      <td><img src="{% static pick.afc_north.team_logo %}" style="width:40px;height:40px;">    {{pick.afc_north.team_name}}</td>
+      <td>  </td>
+      <td>  </td>
+      <td>NFC NORTH</td>
+      <td><img src="{% static pick.nfc_north.team_logo %}" style="width:40px;height:40px;">    {{pick.nfc_north.team_name}}</td>
+    </tr>
+
+    <tr>
+      <td>AFC EAST</td>
+      <td><img src="{% static pick.afc_east.team_logo %}" style="width:40px;height:40px;">    {{pick.afc_east.team_name}}</td>
+      <td></td>
+      <td></td>
+      <td>NFC EAST</td>
+      <td><img src="{% static pick.nfc_east.team_logo %}" style="width:40px;height:40px;">    {{pick.nfc_east.team_name}}</td>
+    </tr>
+
+    <tr>
+      <td>AFC SOUTH</td>
+      <td><img src="{% static pick.afc_south.team_logo %}" style="width:40px;height:40px;">    {{pick.afc_south.team_name}}</td>
+      <td></td>
+      <td></td>
+      <td>NFC SOUTH</td>
+      <td><img src="{% static pick.nfc_south.team_logo %}" style="width:40px;height:40px;">    {{pick.nfc_south.team_name}}</td>
+    </tr>
+    <tr>
+      <td>AFC WEST</td>
+      <td><img src="{% static pick.afc_west.team_logo %}" style="width:40px;height:40px;">    {{pick.afc_west.team_name}}</td>
+      <td></td>
+      <td></td>
+      <td>NFC WEST</td>
+      <td><img src="{% static pick.nfc_west.team_logo %}" style="width:40px;height:40px;">    {{pick.nfc_west.team_name}}</td>
+    </tr>
+    <tr>
+      <td>AFC WILDCARD 1</td>
+      <td><img src="{% static pick.afc_wild1.team_logo %}" style="width:40px;height:40px;">    {{pick.afc_wild1.team_name}}</td>
+      <td></td>
+      <td></td>
+      <td>NFC WILDCARD 1</td>
+      <td><img src="{% static pick.nfc_wild1.team_logo %}" style="width:40px;height:40px;">    {{pick.nfc_wild1.team_name}}</td>
+    </tr>
+    <tr>
+      <td>AFC WILDCARD 2</td>
+      <td><img src="{% static pick.afc_wild2.team_logo %}" style="width:40px;height:40px;">    {{pick.afc_wild2.team_name}}</td>
+      <td></td>
+      <td></td>
+      <td>NFC WILDCARD 2</td>
+      <td><img src="{% static pick.nfc_wild2.team_logo %}" style="width:40px;height:40px;">    {{pick.nfc_wild2.team_name}}</td>
+    </tr>
+
+    {% endfor %}
+  </tbody>
+</table>
+
+<a class="btn btn-success" style="width:200px;" href="{% url 'playoff_teams:update' %}">UPDATE</a>
+
+</div>
+{% endblock %}

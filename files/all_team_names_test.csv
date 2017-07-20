@@ -1,0 +1,33 @@
+short_name,city_name,team_name,full_name,conference,team_logo,division
+ARI,Arizona,Cardinals,Arizona Cardinals,NFC,ARI.png,NFC_WEST
+ATL,Atlanta,Falcons,Atlanta Falcons,NFC,ATL.png,NFC_SOUTH
+BAL,Baltimore,Ravens,Baltimore Ravens,AFC,BAL.png,AFC_NORTH
+BUF,Buffalo,Bills,Buffalo Bills,AFC,BUF.png,AFC_EAST
+CAR,Carolina,Panthers,Carolina Panthers,NFC,CAR.png,NFC_SOUTH
+CHI,Chicago,Bears,Chicago Bears,NFC,CHI.png,NFC_NORTH
+CIN,Cincinnati,Bengals,Cincinnati Bengals,AFC,CIN.png,AFC_NORTH
+CLE,Cleveland,Browns,Cleveland Browns,AFC,CLE.png,AFC_NORTH
+DAL,Dallas,Cowboys,Dallas Cowboys,NFC,DAL.png,NFC_EAST
+DEN,Denver,Broncos,Denver Broncos,AFC,DEN.png,AFC_WEST
+DET,Detroit,Lions,Detroit Lions,NFC,DET.png,NFC_NORTH
+GB,Green Bay,Packers,Green Bay Packers,NFC,GB.png,NFC_NORTH
+HOU,Houston,Texans,Houston Texans,AFC,HOU.png,AFC_SOUTH
+IND,Indianapolis,Colts,Indianapolis Colts,AFC,IND.png,AFC_SOUTH
+JAC,Jacksonville,Jaguars,Jacksonville Jaguars,AFC,JAC.png,AFC_SOUTH
+KC,Kansas City,Chiefs,Kansas City Chiefs,AFC,KC.png,AFC_WEST
+LA,Los Angeles,Rams,Los Angeles Rams,NFC,LA.png,NFC_WEST
+MIA,Miami,Dolphins,Miami Dolphins,AFC,MIA.png,AFC_EAST
+MIN,Minnesota,Vikings,Minnesota Vikings,NFC,MIN.png,NFC_NORTH
+NE,New England,Patriots,New England Patriots,AFC,NE.png,AFC_EAST
+NO,New Orleans,Saints,New Orleans Saints,NFC,NO.png,NFC_SOUTH
+NYG,Giants,Giants,New York Giants,NFC,NYG.png,NFC_EAST
+NYJ,Jets,Jets,New York Jets,AFC,NYJ.png,AFC_EAST
+OAK,Oakland,Raiders,Oakland Raiders,AFC,OAK.png,AFC_WEST
+PHI,Philadelphia,Eagles,Philadelphia Eagles,NFC,PHI.png,NFC_EAST
+PIT,Pittsburgh,Steelers,Pittsburgh Steelers,AFC,PIT.png,AFC_NORTH
+SD,San Diego,Chargers,San Diego Chargers,AFC,SD.png,AFC_WEST
+SEA,Seattle,Seahawks,Seattle Seahawks,NFC,SEA.png,NFC_WEST
+SF,San Francisco,49ers,San Francisco 49ers,NFC,SF.png,NFC_WEST
+TB,Tampa Bay,Buccaneers,Tampa Bay Buccaneers,NFC,TB.png,NFC_SOUTH
+TEN,Tennessee,Titans,Tennessee Titans,AFC,TEN.png,AFC_SOUTH
+WAS,Washington,Redskins,Washington Redskins,NFC,WAS.png,NFC_EAST

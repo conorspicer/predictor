@@ -1,0 +1,48 @@
+{% extends "picks/pick_base.html" %}
+{% load staticfiles %}
+{% load static %}
+
+{% block picks_content %}
+<h5>Make picks or update them here</h5>
+<p>The only picks which will be shown are games for the current week which have not been played yet. Picks are locked approx. 1 hour before KO</p>
+
+
+  <form method="post" action="">
+    {% csrf_token %}
+
+    <table class="table table-striped">
+      <thead>
+        <th>Fixture</th>
+        <th>Away Score</th>
+        <th>Home Score</th>
+      </thead>
+
+
+    {% for form in formset %}
+      <tr>
+        <td><strong>{{form.instance.fixture}}</strong></td>
+
+        <td>
+          <img src="{% static form.instance.fixture.away_team.team_logo %}" style="width:40px;height:40px;">
+          {{form.away_pick}}
+        </td>
+        <td> <strong>@</strong> </td>
+        <td>
+          <img src="{% static form.instance.fixture.home_team.team_logo %}" style="width:40px;height:40px;">
+          {{form.home_pick}}
+        </td>
+
+      </tr>
+    {% endfor %}
+
+      </tr>
+    </table>
+
+    {{ formset.management_form }}
+
+      <button type="submit" name="action" value="save">Save</button>
+  </form><br>
+
+
+
+{% endblock %}

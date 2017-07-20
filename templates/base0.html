@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="{% static 'images/football.png' %}" type="image/png">
+  <meta name="description" content="">
+  <title>NFL Predictor</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;subset=latin">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+  <link rel="stylesheet" href="{% static 'bootstrap-material-design-font/css/material.css' %}">
+  <link rel="stylesheet" href="{% static 'web/assets/mobirise-icons/mobirise-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'tether/tether.min.css' %}">
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'dropdown/css/style.css' %}">
+  {# <link rel="stylesheet" href="{% static 'animate.css/animate.min.css' %}"> #}
+  <link rel="stylesheet" href="{% static 'socicon/css/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'theme/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'mobirise/css/mbr-additional.css' %}" type="text/css">
+
+</head>
+
+
+<body>
+  {# Navbar section #}
+  <section id="menu-0">
+
+      <nav class="navbar navbar-dropdown bg-color transparent navbar-fixed-top">
+          <div class="container">
+
+              <div class="mbr-table">
+                  <div class="mbr-table-cell">
+
+                      <div class="navbar-brand">
+                        <a class="navbar-caption" href="{% url 'home' %}">
+                          <span class="navbar-logo"><span class="mbri-home mbr-iconfont mbr-iconfont-menu"></span></span>
+                        </a>
+                      </div>
+
+                  </div>
+                  <div class="mbr-table-cell">
+
+                      <button class="navbar-toggler pull-xs-right hidden-md-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
+                          <div class="hamburger-icon"></div>
+                      </button>
+
+                      <ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar">
+                        <li class="nav-item"><a class="nav-link link" href="{% url 'admin:index' %}">ADMIN</a></li>
+                        <li class="nav-item"><a class="nav-link link" href="{% url 'fixtures:all' %}">FIXTURES</a></li>
+                        <li class="nav-item"><a class="nav-link link" href="{% url 'picks:all' %}">PICKS</a></li>
+                        <li class="nav-item"><a class="nav-link link" href="{% url 'results:all' %}">SCORES</a></li>
+                        <li class="nav-item"><a class="nav-link link" href="{% url 'HOF' %}">HOF</a></li>
+
+
+                        {% if user.is_authenticated %}
+                          <li class="nav-item nav-btn"><a class="nav-link btn btn-white btn-white-outline" href="{% url 'accounts:logout' %}">LOGOUT</a></li>
+                        {% else %}
+                              <li class="nav-item"><a href="{% url 'accounts:login' %}" class="nav-link btn btn-white btn-white-outline">LOGIN</a></li>
+                        {% endif %}
+                      </ul>
+                      <button hidden="" class="navbar-toggler navbar-close" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
+                          <div class="close-icon"></div>
+                      </button>
+
+                  </div>
+              </div>
+
+          </div>
+      </nav>
+
+  </section>
+
+  {% block content %}
+
+  {% endblock %}
+
+
+
+<footer class="mbr-small-footer mbr-section mbr-section-nopadding" id="footer1-2" style="background-color: rgb(50, 50, 50); padding-top: 1.75rem; padding-bottom: 1.75rem;">
+
+    <div class="container">
+        <p class="text-xs-center">Copyright (c) 2017 Conor Spicer.</p>
+    </div>
+</footer>
+
+
+  <script src="{% static 'web/assets/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'tether/tether.min.js' %}"></script>
+  <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'smooth-scroll/smooth-scroll.js' %}"></script>
+  <script src="{% static 'dropdown/js/script.min.js' %}"></script>
+  <script src="{% static 'touch-swipe/jquery.touch-swipe.min.js' %}"></script>
+  <script src="{% static 'viewport-checker/jquery.viewportchecker.js' %}"></script>
+  <script src="{% static 'jarallax/jarallax.js' %}"></script>
+  <script src="{% static 'bootstrap-carousel-swipe/bootstrap-carousel-swipe.js' %}"></script>
+  <script src="{% static 'social-likes/social-likes.js' %}"></script>
+  <script src="{% static 'theme/js/script.js' %}"></script>
+
+
+  <input name="animation" type="hidden">
+  </body>
+</html>
