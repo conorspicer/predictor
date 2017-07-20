@@ -1,0 +1,5 @@
+Running scripts at predetermined times
+Script to determine these times
+
+Plan of timings for testing/ go live/ maintenance/ in season changes (ie turning off playoff picking)
+TO DO list before launch/ Reg Season/ Playoffs
