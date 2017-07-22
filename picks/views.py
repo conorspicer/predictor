@@ -61,10 +61,17 @@ def UpdatePicks(request):
         queryset=Pick.objects.filter(user=request.user, fixture__week=2, changeable=True)
         )
 
+# for form in formset:
+#   form.fixture = ???
+
+# Alternatively have the fixture as non-editable in the html
+
+
+    print(formset.errors)
     if formset.is_valid():
-      for form in formset.forms:
-          if action == 'save':
-            form.save()
+        for form in formset.forms:
+            if action == 'save':
+                form.save()
 
     redirect('picks:all')
 
@@ -73,6 +80,9 @@ def UpdatePicks(request):
       formset = PickFormSetBase(
         queryset=Pick.objects.filter(user=request.user, fixture__week=2, changeable=True)
         )
+
+  for form in formset:
+        form.fields['fixture'].widget.attrs['readonly'] = True
 
   # return render(request, 'picks/pick_form.html', {'formset': formset}, content_type=RequestContext(request))
   return render(request, 'picks/pick_form.html', {'formset': formset})
