@@ -18,7 +18,7 @@ class Team(models.Model):
     JAC	=	'JAC'
     GB	=	'GB'
     KC	=	'KC'
-    SD	=	'SD'
+    LAC	=	'LAC'
     NO	=	'NO'
     OAK	=	'OAK'
     NYJ	=	'NYJ'
@@ -52,7 +52,7 @@ class Team(models.Model):
     (JAC,'JAC'),
     (GB,'GB'),
     (KC,'KC'),
-    (SD,'SD'),
+    (LAC,'LAC'),
     (NO,'NO'),
     (OAK,'OAK'),
     (NYJ,'NYJ'),

@@ -7,8 +7,6 @@ for person in User.objects.all():
         new_entry = Pick(
         fixture = game,
         user = person,
-        home_pick = 17,
-        away_pick = 12,
         )
         new_entry.save()
 
