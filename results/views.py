@@ -15,7 +15,9 @@ class ResultsPage(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ResultsPage, self).get_context_data(**kwargs)
-        context['totals'] = UserTotalResult.objects.all().order_by('-total_points_scored')
+        # context['totals'] = UserTotalResult.objects.all().order_by('-total_points_scored')
+        context['totals'] = sorted(UserTotalResult.objects.all(), key=lambda x: x.total_points_scored, reverse=True)
+        # sorted(UserTotalResult.objects.all(), key=lambda x: x.total_points_scored)
         context['conorspicer'] = UserWeekResult.objects.filter(user__username = 'conorspicer').order_by('week')
         context['torinmehmet'] = UserWeekResult.objects.filter(user__username = 'torinmehmet').order_by('week')
         context['magnusmartinsen'] = UserWeekResult.objects.filter(user__username = 'magnusmartinsen').order_by('week')
