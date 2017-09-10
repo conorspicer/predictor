@@ -1,3 +1,4 @@
+from datetime import datetime, timezone, timedelta
 from django.shortcuts import render
 from django.views.generic import ListView
 from picks.models import Pick
@@ -24,9 +25,9 @@ class ResultsPage(ListView):
         context['lewismead'] = UserWeekResult.objects.filter(user__username = 'lewismead').order_by('week')
         if self.request.GET.get("week"):
             selection = self.request.GET.get("week")
-            context['picks'] = Pick.objects.filter(fixture__week=selection, changeable=False).order_by('fixture__name')
+            context['picks'] = Pick.objects.filter(fixture__week=selection, fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=5)).order_by('fixture__name')
         else:
-            context['picks'] = Pick.objects.filter(changeable=False).order_by('fixture__name')
+            context['picks'] = Pick.objects.filter(fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=5)).order_by('fixture__name')
         q = self.request.GET.get("week")
         context['input'] = q
 

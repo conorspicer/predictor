@@ -201,11 +201,17 @@ class Fixture(models.Model):
     winner = property(_get_winner)
 
     def _get_margin(self):
-        return abs(self.home_score - self.away_score)
+        if (abs(self.home_score - self.away_score)==0):
+            return 23956
+        else:
+            return abs(self.home_score - self.away_score)
     margin = property(_get_margin)
 
     def _get_totalpts(self):
-       return self.home_score + self.away_score
+        if (self.home_score + self.away_score == 0):
+            return 23956
+        else:
+            return self.home_score + self.away_score
     total_pts = property(_get_totalpts)
 
     def __str__(self):
