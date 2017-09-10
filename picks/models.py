@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from fixtures.models import Team, Fixture
 
+
 from django import template
 register = template.Library()
 
@@ -42,11 +43,10 @@ class Pick(models.Model):
             return 5000
     predicted_total_pts = property(_get_totalpts)
 
-    # potentially use this to restrict which can be altered
-    # eg if ko > datetime.now(): changeable = true
-    changeable = models.BooleanField(default=True)
+    # # potentially use this to restrict which can be altered
+    # # eg if ko > datetime.now(): changeable = true
+    # changeable = models.BooleanField(default=True)
 
-    # winner_pts = models.IntegerField(default = 0)
 
     def _winner_pts(self):
         if( self.predicted_winner == self.fixture.winner ):

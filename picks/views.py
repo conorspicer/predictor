@@ -8,6 +8,7 @@ from .forms import PickFormSetBase
 from fixtures.models import Fixture
 from scripts.get_week import GetWeek
 from results.models import UserWeekResult
+from datetime import datetime, timezone, timedelta
 
 # All weeks' picks for logged in user
 class ListSpecificWeekPicks(LoginRequiredMixin, generic.ListView):
@@ -28,7 +29,7 @@ class ListSpecificWeekPicks(LoginRequiredMixin, generic.ListView):
             queryset = Pick.objects.filter(user=self.request.user)
         return queryset
 
-# All picks submitted/ not changeable by all users
+# All Users' picks less than 1hr to KO, in play or completed
 class ListSubmittedWeekPicks(LoginRequiredMixin, generic.ListView):
     model = Pick
     template_name = 'picks/pick_submitted.html'
@@ -40,17 +41,15 @@ class ListSubmittedWeekPicks(LoginRequiredMixin, generic.ListView):
 
 
     def get_queryset(self):
-        queryset = Pick.objects.all()
+        # queryset = Pick.objects.all()
         if self.request.GET.get("week"):
             selection = self.request.GET.get("week")
-            queryset = Pick.objects.filter(fixture__week=selection, changeable=False).order_by('fixture__name')
-
+            queryset = Pick.objects.filter(fixture__week=selection, fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=5)).order_by('fixture__name')
         else:
-            queryset = Pick.objects.filter(changeable=False).order_by('fixture__name')
+            queryset = Pick.objects.filter(fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=5)).order_by('fixture__name')
         return queryset
 
-
-
+# Picks for logged in user, for current week, with >1hr to KO
 @login_required
 def UpdatePicks(request):
   if request.method == 'POST':
@@ -58,7 +57,7 @@ def UpdatePicks(request):
     this_week = GetWeek()
     formset = PickFormSetBase(
         request.POST,
-        queryset=Pick.objects.filter(user=request.user, fixture__week=GetWeek(), changeable=True)
+        queryset=Pick.objects.filter(fixture__ko_datetime__gt=datetime.now(timezone.utc) - timedelta(hours=5), user=request.user, fixture__week=GetWeek())
         )
 
     print(formset.errors)
@@ -72,7 +71,7 @@ def UpdatePicks(request):
   else:
       this_week = GetWeek()
       formset = PickFormSetBase(
-        queryset=Pick.objects.filter(user=request.user, fixture__week=GetWeek(), changeable=True)
+        queryset=Pick.objects.filter(fixture__ko_datetime__gt=datetime.now(timezone.utc) - timedelta(hours=5), user=request.user, fixture__week=GetWeek() )
         )
 
   # return render(request, 'picks/pick_form.html', {'formset': formset}, content_type=RequestContext(request))
