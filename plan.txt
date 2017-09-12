@@ -1,2 +1,0 @@
-How was nflgame setup to work off a python3 shell?
-Install direct from github link?
