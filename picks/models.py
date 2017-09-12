@@ -16,6 +16,7 @@ class Pick(models.Model):
     user = models.ForeignKey(User, related_name='picks')
     home_pick = models.PositiveIntegerField(null=True, blank=True)
     away_pick = models.PositiveIntegerField(null=True, blank=True)
+    lock = models.BooleanField(default=False)
 
     def _get_winner(self):
         if (self.home_pick is not None and self.away_pick is not None):

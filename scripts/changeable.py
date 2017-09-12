@@ -10,9 +10,13 @@ from datetime import datetime, timezone, timedelta
 from scripts.get_week import GetWeek
 from picks.models import Pick
 
+ - timedelta(hours=3)
+
 w = GetWeek()
 for p in Pick.objects.filter(fixture__week=w):
-    if p.changeable == True:
-        if p.fixture.ko_datetime < datetime.now(timezone.utc) - timedelta(hours=5):
-            p.changeable = False
-            p.save()
+    if p.fixture.ko_datetime < datetime.now(timezone.utc)  - timedelta(hours=3):
+        print(p)
+
+
+            # p.changeable = False
+            # p.save()

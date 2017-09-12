@@ -18,6 +18,8 @@ class PlayoffPick(models.Model):
     nfc_wild1 = models.ForeignKey(Team, blank=True, null=True, related_name='nfc_wild1', limit_choices_to={'conference': 'NFC'},)
     afc_wild2 = models.ForeignKey(Team, blank=True, null=True, related_name='afc_wild2', limit_choices_to={'conference': 'AFC'},)
     nfc_wild2 = models.ForeignKey(Team, blank=True, null=True, related_name='nfc_wild2', limit_choices_to={'conference': 'NFC'},)
+    sb_runner_up = models.ForeignKey(Team, blank=True, null=True, related_name='sb_runner_up')
+    sb_winner = models.ForeignKey(Team, blank=True, null=True, related_name='sb_winner')
 
     def __str__(self):
         return ' '.join([

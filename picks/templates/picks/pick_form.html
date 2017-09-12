@@ -14,7 +14,9 @@
       <thead>
         <th>Fixture</th>
         <th>Away Score</th>
+        <th>@</th>
         <th>Home Score</th>
+        <th>Lock</th>
       </thead>
 
     {% for form in formset %}
@@ -30,6 +32,7 @@
           <img src="{% static form.instance.fixture.home_team.team_logo %}" style="width:40px;height:40px;">
           {{form.home_pick}}
         </td>
+        <td> {{form.lock}} </td>
         {% for hidden in form.hidden_fields %} {{ hidden }} {% endfor %}
       </tr>
     {% endfor %}

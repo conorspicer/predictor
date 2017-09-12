@@ -25,6 +25,8 @@ class PlayoffPickUpdate(LoginRequiredMixin, generic.UpdateView):
         'nfc_wild1',
         'afc_wild2',
         'nfc_wild2',
+        'sb_runner_up',
+        'sb_winner'
         )
     # template_name = 'playoffpick_update.html'
     success_url = reverse_lazy('playoff_teams:all')
