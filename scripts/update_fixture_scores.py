@@ -1,5 +1,5 @@
 # from scripts.update_fixture_scores import UpdateFixtureScores
-from fixtures.models import Fixture, Team
+from fixtures.models import Fixture
 import nflgame
 from scripts.get_week import GetWeek
 
@@ -14,3 +14,4 @@ def UpdateFixtureScores():
             f.away_score = this_game[0].score_away
             f.home_score = this_game[0].score_home
             f.save()
+UpdateFixtureScores()
