@@ -16,6 +16,8 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
 
+# PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+# sys.path.append(os.path.join(PROJECT_ROOT, 'predictor'))
 
 AUTH_PROFILE_MODULE = 'accounts.User'
 

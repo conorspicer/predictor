@@ -1,4 +1,7 @@
+#! /usr/bin/env python3.
 # from scripts.update_fixture_scores import UpdateFixtureScores
+import os
+
 from fixtures.models import Fixture
 import nflgame
 from scripts.get_week import GetWeek
