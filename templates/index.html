@@ -33,7 +33,7 @@
 
 </section>
 
-{# draft day youtube #}
+
 <section class="mbr-section" id="msg-box4-1" style="background-color: rgb(242, 242, 242); padding-top: 120px; padding-bottom: 120px;">
 
     <div class="container">
@@ -55,100 +55,6 @@
 
 </section>
 
-{# 3 part slides: fixtures, picks, results #}
-<section class="mbr-slider mbr-section mbr-section__container carousel slide mbr-section-nopadding" data-ride="carousel" data-keyboard="false" data-wrap="true" data-pause="false" data-interval="6000" id="slider-2">
-    <div>
-        <div>
-            <div>
 
-                <div class="carousel-inner" role="listbox">
-                    <div class="mbr-section mbr-section-hero carousel-item dark center mbr-section-full active" data-bg-video-slide="false" style="background-image: url(static/images/man-back.jpg);">
-                        <div class="mbr-table-cell">
-                            <div class="mbr-overlay"></div>
-                            <div class="container-slide container">
-
-                                <div class="row">
-                                    <div class="col-md-8 col-md-offset-2 text-xs-center">
-                                        <h2 class="mbr-section-title display-1">FIND FIXTURES</h2>
-                                        <p class="mbr-section-lead lead">Filter and sort through all fixtures for the season</p>
-
-                                        <div class="mbr-section-btn"><a class="btn btn-lg btn-success" href="{% url 'fixtures:all'%}">GO THERE</a> </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><div class="mbr-section mbr-section-hero carousel-item dark center mbr-section-full" data-bg-video-slide="false" style="background-image: url(static/images/bridge.jpg);">
-                        <div class="mbr-table-cell">
-                            <div class="mbr-overlay"></div>
-                            <div class="container-slide container">
-
-                                <div class="row">
-                                    <div class="col-md-8 col-md-offset-2 text-xs-center">
-                                        <h2 class="mbr-section-title display-1">MAKE PICKS</h2>
-                                        <p class="mbr-section-lead lead"></p>
-
-                                        <div class="mbr-section-btn"><a class="btn btn-lg btn-primary" href="{% url 'picks:all'%}">CLICK HERE</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><div class="mbr-section mbr-section-hero carousel-item dark center mbr-section-full" data-bg-video-slide="false" style="background-image: url(static/images/sparklers.jpg);">
-                        <div class="mbr-table-cell">
-                            <div class="mbr-overlay"></div>
-                            <div class="container-slide container">
-
-                                <div class="row">
-                                    <div class="col-md-8 col-md-offset-2 text-xs-center">
-                                        <h2 class="mbr-section-title display-1">REVIEW RESULTS</h2>
-                                        <p class="mbr-section-lead lead"></p>
-
-                                        <div class="mbr-section-btn"><a class="btn btn-lg btn-info" href="{% url 'results:all'%}">LATEST SCORES</a> </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <a data-app-prevent-settings="" class="left carousel-control" role="button" data-slide="prev" href="#slider-2">
-                    <span class="icon-prev" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a data-app-prevent-settings="" class="right carousel-control" role="button" data-slide="next" href="#slider-2">
-                    <span class="icon-next" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="mbr-section mbr-section-md-padding" id="social-buttons1-a" style="background-color: rgb(255, 255, 255); padding-top: 90px; padding-bottom: 90px;">
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 text-xs-center">
-                <h3 class="mbr-section-title display-2">SHARE THIS PAGE!</h3>
-                <div>
-
-                  <div class="mbr-social-likes" data-counters="false">
-                    <span class="btn btn-social facebook" title="Share link on Facebook">
-                        <i class="socicon socicon-facebook"></i>
-                    </span>
-                    <span class="btn btn-social twitter" title="Share link on Twitter">
-                        <i class="socicon socicon-twitter"></i>
-                    </span>
-
-
-                    <span class="btn btn-social odnoklassniki" title="Share link on Odnoklassniki">
-                        <i class="socicon socicon-odnoklassniki"></i>
-                    </span>
-                  </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
 {% endblock %}
