@@ -57,7 +57,7 @@ def UpdatePicks(request):
     this_week = GetWeek()
     formset = PickFormSetBase(
         request.POST,
-        queryset=Pick.objects.filter(fixture__ko_datetime__gt=datetime.now(timezone.utc) - timedelta(hours=3), user=request.user, fixture__week=GetWeek())
+        queryset=Pick.objects.filter(fixture__ko_datetime__gt=datetime.now(timezone.utc) - timedelta(hours=3), user=request.user, fixture__week=this_week)
         )
 
     print(formset.errors)
