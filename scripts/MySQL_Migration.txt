@@ -1,0 +1,50 @@
+rm -rf accounts/migrations/
+rm -rf fixtures/migrations/
+rm -rf picks/migrations/
+rm -rf results/migrations/
+rm -rf playoff_teams/migrations/
+
+# comment out accounts in settings.py
+python manage.py migrate
+# uncomment accounts in settings.py
+
+python manage.py makemigrations accounts
+python manage.py makemigrations fixtures
+python manage.py makemigrations picks
+python manage.py makemigrations results
+python manage.py makemigrations playoff_teams
+
+python manage.py migrate
+
+# maybe don't need to do the below
+python manage.py createsuperuser
+
+# reverting to the sqlite DB
+python manage.py dumpdata > datadump.json
+
+
+# now re-enabling the MySQL DB
+python manage.py shell
+from django.contrib.contenttypes.models import ContentType
+ContentType.objects.all().delete()
+quit()
+
+python manage.py loaddata datadump.json
+
+
+
+
+#### Extra Notes: ####
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'testdeployment$fourth',
+        'USER': 'testdeployment',
+        'PASSWORD': 'thisdoorframe -',
+        'HOST': 'testdeployment.mysql.pythonanywhere-services.com',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        }
+    }
+}
