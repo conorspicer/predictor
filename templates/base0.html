@@ -87,6 +87,9 @@
     </div>
 </footer>
 
+{% if GOOGLE_ANALYTICS_PROPERTY_ID %}
+  {% include "templates/google_analytics.html" %}
+{% endif %}
 
   <script src="{% static 'web/assets/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'tether/tether.min.js' %}"></script>

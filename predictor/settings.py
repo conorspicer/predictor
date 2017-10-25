@@ -18,6 +18,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # DEBUG = True
 DEBUG = False
 
+# Google Analytics
+GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-103968562-1'
+GOOGLE_ANALYTICS_DOMAIN = 'nflpredictor.pythonanywhere.com'
+
 
 ALLOWED_HOSTS = [
 '127.0.0.1',
@@ -67,6 +71,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
+                'predictor.context_processors.google_analytics',
             ],
         },
     },
