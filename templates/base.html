@@ -89,13 +89,24 @@
 </footer>
 
 
-{% block footer %}
+  {% block footer %}
 
-{% endblock %}
+  {% endblock %}
 
-{% if GOOGLE_ANALYTICS_PROPERTY_ID %}
-  {% include "templates/google_analytics.html" %}
-{% endif %}
+  {% if GOOGLE_ANALYTICS_PROPERTY_ID %}
+    {% include "templates/google_analytics.html" %}
+  {% endif %}
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-103968562-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-103968562-1');
+  </script>
+
 
   <script src="{% static 'web/assets/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'tether/tether.min.js' %}"></script>
