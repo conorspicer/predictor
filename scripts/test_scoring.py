@@ -7,4 +7,4 @@ from scripts.get_week import GetWeek
 from fixtures.models import Fixture
 
 
-print("All imports were successful)
+print("All imports were successful")
