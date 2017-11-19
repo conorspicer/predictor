@@ -1,10 +1,10 @@
-#! /usr/bin/env python3.
+#! /usr/bin/env python3
 # from scripts.update_fixture_scores import UpdateFixtureScores
-import os
 
-from fixtures.models import Fixture
+
 import nflgame
 from scripts.get_week import GetWeek
+from fixtures.models import Fixture
 
 def UpdateFixtureScores():
     for f in Fixture.objects.filter(week__lte=GetWeek()):
