@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import(
     PermissionRequiredMixin
 )
 
+from django.contrib.auth.decorators import login_required
 from django.views import generic
 from fixtures.models import Fixture, Team
 from datetime import datetime, date, timedelta
