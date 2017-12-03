@@ -8,6 +8,7 @@ from django.views import generic
 from fixtures.models import Fixture, Team
 from datetime import datetime, date, timedelta
 from scripts.get_week import GetWeek
+from .forms import FixtureFormSetBase
 
 class ListSpecificWeekFixtures(LoginRequiredMixin, generic.ListView):
     model = Fixture
