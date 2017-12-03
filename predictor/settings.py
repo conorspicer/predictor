@@ -15,8 +15,8 @@ CRISPY_TEMPLATE_PACK = 'bootstrap'
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-DEBUG = True
-# DEBUG = False
+# DEBUG = True
+DEBUG = False
 
 # Google Analytics
 GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-103968562-1'
