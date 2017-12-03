@@ -52,7 +52,7 @@ class ListSubmittedWeekPicks(LoginRequiredMixin, generic.ListView):
 class ListAllWeekPicks(LoginRequiredMixin, generic.ListView):
     model = Pick
     template_name = 'picks/pick_check.html'
-    
+
     def get_context_data(self, **kwargs):
         context = super(ListAllWeekPicks, self).get_context_data(**kwargs)
         q = self.request.GET.get("week")
@@ -76,7 +76,7 @@ def UpdatePicks(request):
     this_week = GetWeek()
     formset = PickFormSetBase(
         request.POST,
-        queryset=Pick.objects.filter(fixture__ko_datetime__gt=datetime.now(timezone.utc) - timedelta(hours=3), user=request.user, fixture__week=this_week)
+        queryset=Pick.objects.filter(fixture__ko_datetime__gt=datetime.now(timezone.utc), user=request.user, fixture__week=this_week)
         # queryset=Pick.objects.filter(user=request.user, fixture__week=this_week)
         )
 
@@ -91,7 +91,7 @@ def UpdatePicks(request):
   else:
       this_week = GetWeek()
       formset = PickFormSetBase(
-        queryset=Pick.objects.filter(fixture__ko_datetime__gt=datetime.now(timezone.utc) - timedelta(hours=3), user=request.user, fixture__week=GetWeek() )
+        queryset=Pick.objects.filter(fixture__ko_datetime__gt=datetime.now(timezone.utc), user=request.user, fixture__week=GetWeek() )
         # queryset=Pick.objects.filter(user=request.user, fixture__week=this_week )
         )
 
