@@ -9,6 +9,9 @@ from fixtures.models import Fixture, Team
 from datetime import datetime, date, timedelta
 from scripts.get_week import GetWeek
 from .forms import FixtureFormSetBase
+from django.shortcuts import redirect, render
+from django.template import RequestContext
+from django.views import generic
 
 class ListSpecificWeekFixtures(LoginRequiredMixin, generic.ListView):
     model = Fixture
