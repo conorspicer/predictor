@@ -76,8 +76,8 @@ def UpdatePicks(request):
     this_week = GetWeek()
     formset = PickFormSetBase(
         request.POST,
-        queryset=Pick.objects.filter(fixture__ko_datetime__gt=datetime.now(timezone.utc)+timedelta(hours=2), user=request.user, fixture__week=this_week)
-        # queryset=Pick.objects.filter(user=request.user, fixture__week=this_week)
+        # queryset=Pick.objects.filter(fixture__ko_datetime__gt=datetime.now(timezone.utc)+timedelta(hours=2), user=request.user, fixture__week=this_week)
+        queryset=Pick.objects.filter(user=request.user, fixture__week=this_week)
         )
 
     print(formset.errors)
@@ -91,8 +91,8 @@ def UpdatePicks(request):
   else:
       this_week = GetWeek()
       formset = PickFormSetBase(
-        queryset=Pick.objects.filter(fixture__ko_datetime__gt=datetime.now(timezone.utc)+timedelta(hours=2), user=request.user, fixture__week=GetWeek() )
-        # queryset=Pick.objects.filter(user=request.user, fixture__week=this_week )
+        # queryset=Pick.objects.filter(fixture__ko_datetime__gt=datetime.now(timezone.utc)+timedelta(hours=2), user=request.user, fixture__week=GetWeek() )
+        queryset=Pick.objects.filter(user=request.user, fixture__week=this_week )
         )
 
   # return render(request, 'picks/pick_form.html', {'formset': formset}, content_type=RequestContext(request))
