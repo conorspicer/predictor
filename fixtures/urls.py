@@ -6,5 +6,5 @@ app_name = 'fixtures'
 
 urlpatterns = [
     url(r"^$", views.ListSpecificWeekFixtures.as_view(), name="all"),
-    url(r"^update/$", views.UpdateFixtures.as_view(), name="update"),
+    url(r"^update/$", views.UpdateFixtures, name="update"),
 ]
