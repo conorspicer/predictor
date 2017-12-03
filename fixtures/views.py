@@ -1,4 +1,3 @@
-
 from django.contrib.auth.mixins import(
     LoginRequiredMixin,
     PermissionRequiredMixin
@@ -26,3 +25,27 @@ class ListSpecificWeekFixtures(LoginRequiredMixin, generic.ListView):
         else:
             queryset = Fixture.objects.all().order_by('name')
         return queryset
+
+@login_required
+def UpdateFixtures(request):
+  if request.method == 'POST':
+    action = request.POST.get('action')
+    formset = FixtureFormSetBase(
+        request.POST,
+        queryset=Fixture.objects.filter(week=GetWeek())
+        )
+
+    print(formset.errors)
+    if formset.is_valid():
+        for form in formset.forms:
+            if action == 'save':
+                form.save()
+
+    redirect('fixtures:all')
+
+  else:
+      formset = FixtureFormSetBase(
+        queryset=Fixture.objects.filter(week=GetWeek())
+        )
+
+  return render(request, 'fixtures/fixture_form.html', {'formset': formset})
