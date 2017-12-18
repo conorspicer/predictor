@@ -177,7 +177,7 @@ class Team(models.Model):
     division = models.CharField(max_length=50, choices=DIVISIONS, null=True)
     conference = models.CharField(max_length=5, choices=CONFS, null=True, default='AFC')
     team_logo = models.ImageField(upload_to='logos', blank=True)
-    playoff = models.BooleanField(default=False)
+    # playoff = models.BooleanField(default=False)
 
     def __str__(self):
         return self.team_name
