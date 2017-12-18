@@ -1,6 +1,7 @@
 from django.db import models
 from fixtures.models import Team, Fixture
 from picks.models import Pick
+from playoff_teams.models import PlayoffPick
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -13,6 +14,30 @@ class UserWeekResult(models.Model):
         counter = 0
         for p in Pick.objects.filter(user=self.user, fixture__week=self.week):
             counter += p.points_scored
+
+        # if(self.week<22):
+        #     counter = 0
+        #     for p in Pick.objects.filter(user=self.user, fixture__week=self.week):
+        #         counter += p.points_scored
+        # else:
+        #     counter = 0
+        #     for pp in PlayoffPick.objects.filter(user=self.user):
+        #     for pp in PlayoffPick.objects.filter(user="conorspicer"):
+        #         for team in [
+        #             pp.afc_east,
+        #             pp.afc_north,
+        #             pp.afc_south,
+        #             pp.afc_west,
+        #             pp.nfc_east,
+        #             pp.nfc_north,
+        #             pp.nfc_south,
+        #             pp.nfc_west,
+        #             pp.afc_wild1,
+        #             pp.afc_wild2,
+        #             pp.nfc_wild1,
+        #             pp.nfc_wild2 ]:
+        #             if team.playoff:
+        #                 counter += 50
         return counter
     user_points = property(_user_points)
 
