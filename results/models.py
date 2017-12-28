@@ -20,13 +20,13 @@ class UserWeekResult(models.Model):
             for p in Pick.objects.filter(user=self.user, fixture__week=self.week):
                 counter += p.points_scored
         elif self.user.username == 'conorspicer':
-            counter = 1
+            counter = 0
         elif self.user.username == 'torinmehmet':
-            counter = 2
+            counter = 0
         elif self.user.username == 'magnusmartinsen':
-            counter = 3
+            counter = 0
         elif self.user.username == 'lewismead':
-            counter = 4
+            counter = 0
         return counter
     user_points = property(_user_points)
 
