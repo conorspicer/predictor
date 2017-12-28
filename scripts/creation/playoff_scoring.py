@@ -10,4 +10,4 @@ for person in User.objects.all():
     )
     new_entry.save()
 
-for game in Fixture.objects.filter(week=18):
+# for game in Fixture.objects.filter(week=18):
