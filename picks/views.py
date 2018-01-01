@@ -68,6 +68,25 @@ class ListAllWeekPicks(LoginRequiredMixin, generic.ListView):
             queryset = Pick.objects.all().order_by('fixture__name')
         return queryset
 
+class ListSimpleWeekPicks(LoginRequiredMixin, generic.ListView):
+    model = Pick
+    template_name = 'picks/pick_simple.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ListAllWeekPicks, self).get_context_data(**kwargs)
+        q = self.request.GET.get("week")
+        context['input'] = q
+        return context
+
+    def get_queryset(self):
+        # queryset = Pick.objects.all()
+        if self.request.GET.get("week"):
+            selection = self.request.GET.get("week")
+            queryset = Pick.objects.filter(fixture__week=selection).order_by('fixture__name')
+        else:
+            queryset = Pick.objects.all().order_by('fixture__name')
+        return queryset
+
 # Picks for logged in user, for current week, with >1hr to KO
 @login_required
 def UpdatePicks(request):
