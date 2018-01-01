@@ -21,14 +21,6 @@
 </form>
 
 <table class="table">
-  <colgroup>
-   <col span="1" style="width: 5%;">
-   <col span="1" style="width: 22%;">
-   <col span="1" style="width: 5%;">
-   <col span="1" style="width: 17%;">
-   <col span="1" style="width: 17%;">
-   <col span="1" style="width: 17%;">
-   <col span="1" style="width: 17%;">
 
 <thead>
   <th>Week</th>
@@ -52,17 +44,20 @@
         <td>{{pick.predicted_winner.team_name}}</td>
         <td>{{pick.predicted_margin}}</td>
         <td>{{pick.predicted_total_pts}}</td>
+        <td>{{pick.lock}}</td>
 
     {% elif forloop.counter|divisibleby:4 %}
         <td>{{pick.predicted_winner.team_name}}</td>
         <td>{{pick.predicted_margin}}</td>
         <td>{{pick.predicted_total_pts}}</td>
+        <td>{{pick.lock}}</td>
       </tr>
 
     {% else %}
         <td>{{pick.predicted_winner.team_name}}</td>
         <td>{{pick.predicted_margin}}</td>
         <td>{{pick.predicted_total_pts}}</td>
+        <td>{{pick.lock}}</td>
     {% endif %}
 
   {% endfor %}
