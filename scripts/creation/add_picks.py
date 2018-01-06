@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
-from fixtures.models import Fixture, Team
+from fixtures.models import Fixture
 from picks.models import Pick
+from scripts.get_week import GetWeek
 
 for person in User.objects.all():
     for game in Fixture.objects.all():
@@ -10,27 +11,17 @@ for person in User.objects.all():
         )
         new_entry.save()
 
+# Add picks for playoff weeks:
+this_week = GetWeek()
+for person in User.objects.all():
+    for game in Fixture.objects.filer(week=this_week):
+        new_entry = Pick(
+        fixture = game,
+        user = person,
+        )
+        new_entry.save()
 
-WEEKS = (
-'WK1',
-'WK2',
-'WK3',
-'WK4',
-'WK5',
-'WK6',
-'WK7',
-'WK8',
-'WK9',
-'WK10',
-'WK11',
-'WK12',
-'WK13',
-'WK14',
-'WK15',
-'WK16',
-'WK17',
-'WILDCARD',
-'DIVISIONAL',
-'CHAMPIONSHIP',
-'SUPERBOWL',
-)
+counter = 0
+for person in User.objects.all():
+    counter += 1
+print(counter)
