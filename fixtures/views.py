@@ -27,7 +27,8 @@ class ListSpecificWeekFixtures(LoginRequiredMixin, generic.ListView):
             queryset = Fixture.objects.filter(week=selection)
             # queryset = Fixture.objects.filter(week=selection).order_by('ko_datetime')
         else:
-            queryset = Fixture.objects.all().order_by('ko_datetime')
+            queryset = Fixture.objects.all()
+            # queryset = Fixture.objects.all().order_by('ko_datetime')
         return queryset
 
 @login_required
