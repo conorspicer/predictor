@@ -26,9 +26,9 @@ class ListSpecificWeekFixtures(LoginRequiredMixin, generic.ListView):
         # queryset = Fixture.objects.all()
         if self.request.GET.get("week"):
             selection = self.request.GET.get("week")
-            queryset = Fixture.objects.filter(week=selection).order_by('name')
+            queryset = Fixture.objects.filter(week=selection).order_by('ko_datetime')
         else:
-            queryset = Fixture.objects.all().order_by('name')
+            queryset = Fixture.objects.all().order_by('ko_datetime')
         return queryset
 
 @login_required
@@ -37,7 +37,7 @@ def UpdateFixtures(request):
     action = request.POST.get('action')
     formset = FixtureFormSetBase(
         request.POST,
-        queryset=Fixture.objects.filter(week=GetWeek())
+        queryset=Fixture.objects.filter(week=GetWeek()).order_by('ko_datetime')
         )
 
     print(formset.errors)
@@ -50,7 +50,7 @@ def UpdateFixtures(request):
 
   else:
       formset = FixtureFormSetBase(
-        queryset=Fixture.objects.filter(week=GetWeek())
+        queryset=Fixture.objects.filter(week=GetWeek()).order_by('ko_datetime')
         )
 
   return render(request, 'fixtures/fixture_form.html', {'formset': formset})

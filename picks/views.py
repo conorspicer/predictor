@@ -24,9 +24,9 @@ class ListSpecificWeekPicks(LoginRequiredMixin, generic.ListView):
         queryset = Pick.objects.all()
         if self.request.GET.get("week"):
             selection = self.request.GET.get("week")
-            queryset = Pick.objects.filter(user=self.request.user, fixture__week=selection)
+            queryset = Pick.objects.filter(user=self.request.user, fixture__week=selection).order_by('fixture__ko_datetime')
         else:
-            queryset = Pick.objects.filter(user=self.request.user)
+            queryset = Pick.objects.filter(user=self.request.user).order_by('fixture__ko_datetime')
         return queryset
 
 # All Users' picks less than 1hr to KO, in play or completed
@@ -43,9 +43,9 @@ class ListSubmittedWeekPicks(LoginRequiredMixin, generic.ListView):
         # queryset = Pick.objects.all()
         if self.request.GET.get("week"):
             selection = self.request.GET.get("week")
-            queryset = Pick.objects.filter(fixture__week=selection, fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3)).order_by('fixture__name')
+            queryset = Pick.objects.filter(fixture__week=selection, fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3)).order_by('fixture__ko_datetime')
         else:
-            queryset = Pick.objects.filter(fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3)).order_by('fixture__name')
+            queryset = Pick.objects.filter(fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3)).order_by('fixture__ko_datetime')
         return queryset
 
 # All Users' picks
@@ -63,9 +63,9 @@ class ListAllWeekPicks(LoginRequiredMixin, generic.ListView):
         # queryset = Pick.objects.all()
         if self.request.GET.get("week"):
             selection = self.request.GET.get("week")
-            queryset = Pick.objects.filter(fixture__week=selection).order_by('fixture__name')
+            queryset = Pick.objects.filter(fixture__week=selection)order_by('fixture__ko_datetime')
         else:
-            queryset = Pick.objects.all().order_by('fixture__name')
+            queryset = Pick.objects.all()order_by('fixture__ko_datetime')
         return queryset
 
 class ListSimpleWeekPicks(LoginRequiredMixin, generic.ListView):
@@ -76,9 +76,9 @@ class ListSimpleWeekPicks(LoginRequiredMixin, generic.ListView):
         # queryset = Pick.objects.all()
         if self.request.GET.get("week"):
             selection = self.request.GET.get("week")
-            queryset = Pick.objects.filter(fixture__week=selection).order_by('fixture__name')
+            queryset = Pick.objects.filter(fixture__week=selection)order_by('fixture__ko_datetime')
         else:
-            queryset = Pick.objects.all().order_by('fixture__name')
+            queryset = Pick.objects.all()order_by('fixture__ko_datetime')
         return queryset
 
 # Picks for logged in user, for current week, with >1hr to KO
