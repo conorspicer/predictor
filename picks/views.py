@@ -63,9 +63,9 @@ class ListAllWeekPicks(LoginRequiredMixin, generic.ListView):
         # queryset = Pick.objects.all()
         if self.request.GET.get("week"):
             selection = self.request.GET.get("week")
-            queryset = Pick.objects.filter(fixture__week=selection)order_by('fixture__ko_datetime')
+            queryset = Pick.objects.filter(fixture__week=selection).order_by('fixture__ko_datetime')
         else:
-            queryset = Pick.objects.all()order_by('fixture__ko_datetime')
+            queryset = Pick.objects.all().order_by('fixture__ko_datetime')
         return queryset
 
 class ListSimpleWeekPicks(LoginRequiredMixin, generic.ListView):
@@ -76,9 +76,9 @@ class ListSimpleWeekPicks(LoginRequiredMixin, generic.ListView):
         # queryset = Pick.objects.all()
         if self.request.GET.get("week"):
             selection = self.request.GET.get("week")
-            queryset = Pick.objects.filter(fixture__week=selection)order_by('fixture__ko_datetime')
+            queryset = Pick.objects.filter(fixture__week=selection).order_by('fixture__ko_datetime')
         else:
-            queryset = Pick.objects.all()order_by('fixture__ko_datetime')
+            queryset = Pick.objects.all().order_by('fixture__ko_datetime')
         return queryset
 
 # Picks for logged in user, for current week, with >1hr to KO
@@ -89,7 +89,11 @@ def UpdatePicks(request):
     this_week = GetWeek()
     formset = PickFormSetBase(
         request.POST,
-        queryset=Pick.objects.filter(fixture__ko_datetime__gt=datetime.now(timezone.utc)-timedelta(hours=5), user=request.user, fixture__week=this_week)
+        queryset=Pick.objects.filter(
+        fixture__ko_datetime__gt=datetime.now(timezone.utc)-timedelta(hours=5),
+        user=request.user,
+        fixture__week=this_week
+        ).order_by('fixture__ko_datetime')
         # queryset=Pick.objects.filter(user=request.user, fixture__week=this_week)
         )
 
@@ -104,7 +108,7 @@ def UpdatePicks(request):
   else:
       this_week = GetWeek()
       formset = PickFormSetBase(
-        queryset=Pick.objects.filter(fixture__ko_datetime__gt=datetime.now(timezone.utc)-timedelta(hours=5), user=request.user, fixture__week=GetWeek() )
+        queryset=Pick.objects.filter(fixture__ko_datetime__gt=datetime.now(timezone.utc)-timedelta(hours=5), user=request.user, fixture__week=GetWeek() ).order_by('fixture__ko_datetime')
         # queryset=Pick.objects.filter(user=request.user, fixture__week=this_week )
         )
 
