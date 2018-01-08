@@ -22,11 +22,10 @@ class ListSpecificWeekFixtures(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        # queryset = Fixture.objects.all().order_by('name')
-        # queryset = Fixture.objects.all()
         if self.request.GET.get("week"):
             selection = self.request.GET.get("week")
-            queryset = Fixture.objects.filter(week=selection).order_by('ko_datetime')
+            queryset = Fixture.objects.filter(week=selection)
+            # queryset = Fixture.objects.filter(week=selection).order_by('ko_datetime')
         else:
             queryset = Fixture.objects.all().order_by('ko_datetime')
         return queryset
