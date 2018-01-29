@@ -11,14 +11,16 @@ import numpy as np
 import pandas as pd
 import sys
 sys.path.append('/Users/conorspicer/Documents/Udemy/Django/My_code/predictor/scripts/stats')
-from functions import independent_vars
+from functions import independent_vars, relative_independent_vars
 
 # Read in data and exclude week 1 games
-df = pd.read_csv('2009_to_2017_data_complete.csv', index_col=0)
+# df = pd.read_csv('2009_to_2017_data_complete.csv', index_col=0)
+# Use relative stats data instead
+df = pd.read_csv('2009_to_2017_relative_data_complete.csv', index_col=0)
 df = df[df.week>1]
 
 # Split data into what we wish to predict from (X) and the 3 variables we aim to predict
-X = df[independent_vars].values
+X = df[relative_independent_vars].values
 win = df['win']
 margin = df['margin']
 total_pts = df['total_pts']
@@ -26,12 +28,9 @@ total_pts = df['total_pts']
 # Define which variable we want to predict
 y = win
 
-# Transform 'home'/ 'away' to OneHot encoded columns
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
-labelencoder_X = LabelEncoder()
-X[:, 0] = labelencoder_X.fit_transform(X[:, 0])
-onehotencoder = OneHotEncoder(categorical_features = [0])
-X = onehotencoder.fit_transform(X).toarray()
+# Transform 'home'/ 'away' to 1/0 values. Home == 1
+for i in range(0,X.shape[0]):
+    X[i,0] = 1 if X[i,0] == 'home' else 0
 
 # Splitting the dataset into the Training set and Test set
 from sklearn.cross_validation import train_test_split
