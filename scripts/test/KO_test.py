@@ -1,6 +1,5 @@
 from datetime import datetime
 from fixtures.models import Fixture, Team
-from accounts.models import User
 import nflgame
 
 for f in Fixture.objects.all():
@@ -22,7 +21,3 @@ for f in Fixture.objects.all():
         f.away_team.short_name = "JAC"
     f.ko_datetime = t
     f.save()
-
-
-
-    #

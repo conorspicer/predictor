@@ -6,6 +6,7 @@ import nflgame
 from scripts.get_week import get_week
 from fixtures.models import Fixture
 
+
 def UpdateFixtureScores():
     for f in Fixture.objects.filter(week__lte=get_week()):
         if f.away_team.short_name == "JAC":
@@ -17,4 +18,5 @@ def UpdateFixtureScores():
             f.away_score = this_game[0].score_away
             f.home_score = this_game[0].score_home
             f.save()
+
 UpdateFixtureScores()

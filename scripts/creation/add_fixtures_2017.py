@@ -1,12 +1,14 @@
 """
 To update nflgame.sched.games:
 
-Go to: /Users/conorspicer/anaconda/envs/nflpenv/lib/python3.6/site-packages/nflgame
+Go to:
+
+cd /Users/conorspicer/anaconda/envs/nflpenv/lib/python3.6/site-packages/nflgame
 
 Then commenting out: _CUR_SCHEDULE = "http://www.nfl.com/liveupdate/scorestrip/postseason/ss.xml"
 & un-comment: _CUR_SCHEDULE = "http://www.nfl.com/liveupdate/scorestrip/ss.xml"
 
-Run update_sched.py --year 2017
+py update_sched.py --year 2018
 """
 
 from fixtures.models import Fixture, Team
