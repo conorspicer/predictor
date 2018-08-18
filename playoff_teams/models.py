@@ -4,6 +4,7 @@ from fixtures.models import Team
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
+
 class PlayoffPick(models.Model):
     user = models.ForeignKey(User, related_name='playoff_pick')
     afc_north = models.ForeignKey(Team, blank=True, null=True, related_name='afc_north', limit_choices_to={'division': 'AFC_NORTH'},)

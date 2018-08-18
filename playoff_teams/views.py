@@ -4,11 +4,13 @@ from .models import PlayoffPick
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
+
 class PlayoffPickList(LoginRequiredMixin, generic.ListView):
     model = PlayoffPick
 
     def get_queryset(self):
         return PlayoffPick.objects.filter(user=self.request.user)
+
 
 class PlayoffPickUpdate(LoginRequiredMixin, generic.UpdateView):
     model = PlayoffPick
