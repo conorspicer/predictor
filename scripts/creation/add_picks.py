@@ -1,3 +1,12 @@
+"""
+Run this using:
+
+webapp summary screen > launch console with this venv
+cd predictor
+python manage.py shell
+
+"""
+
 from django.contrib.auth.models import User
 from fixtures.models import Fixture
 from picks.models import Pick
