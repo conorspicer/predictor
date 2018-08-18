@@ -10,13 +10,11 @@ cffi==1.10.0
 Django==1.11.2
 django-autocomplete-light==3.2.9
 django-bootstrap3==9.0.0
-django-celery-beat==1.0.1
 httplib2==0.10.3
 kombu==4.1.0
 nflgame==1.2.20
 numpy==1.13.1
 olefile==0.44
-Pillow==4.2.1
 pycparser==2.18
 python-dateutil==2.6.1
 pytz==2017.2

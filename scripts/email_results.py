@@ -1,5 +1,5 @@
 from django.core.mail import send_mail
-from scripts.get_week import GetWeek
+from scripts.get_week import get_week
 from django.template.loader import get_template
 
 

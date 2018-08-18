@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from fixtures.models import Fixture
 from picks.models import Pick
-from scripts.get_week import GetWeek
+from scripts.get_week import get_week
 
 for person in User.objects.all():
     for game in Fixture.objects.all():
@@ -12,7 +12,7 @@ for person in User.objects.all():
         new_entry.save()
 
 # Add picks for playoff weeks:
-this_week = GetWeek()
+this_week = get_week()
 for person in User.objects.all():
     for game in Fixture.objects.filer(week=this_week):
         new_entry = Pick(

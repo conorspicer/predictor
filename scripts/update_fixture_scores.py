@@ -3,11 +3,11 @@
 
 
 import nflgame
-from scripts.get_week import GetWeek
+from scripts.get_week import get_week
 from fixtures.models import Fixture
 
 def UpdateFixtureScores():
-    for f in Fixture.objects.filter(week__lte=GetWeek()):
+    for f in Fixture.objects.filter(week__lte=get_week()):
         if f.away_team.short_name == "JAC":
             f.away_team.short_name = "JAX"
         if f.home_team.short_name == "JAC":

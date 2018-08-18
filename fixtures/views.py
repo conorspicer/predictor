@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views import generic
 from fixtures.models import Fixture, Team
 from datetime import datetime, date, timedelta
-from scripts.get_week import GetWeek
+from scripts.get_week import get_week
 from .forms import FixtureFormSetBase
 from django.shortcuts import redirect, render
 from django.template import RequestContext
@@ -33,7 +33,7 @@ def UpdateFixtures(request):
     action = request.POST.get('action')
     formset = FixtureFormSetBase(
         request.POST,
-        queryset=Fixture.objects.filter(week=GetWeek()).order_by('ko_datetime')
+        queryset=Fixture.objects.filter(week=get_week()).order_by('ko_datetime')
         )
 
     print(formset.errors)
@@ -46,7 +46,7 @@ def UpdateFixtures(request):
 
   else:
       formset = FixtureFormSetBase(
-        queryset=Fixture.objects.filter(week=GetWeek()).order_by('ko_datetime')
+        queryset=Fixture.objects.filter(week=get_week()).order_by('ko_datetime')
         )
 
   return render(request, 'fixtures/fixture_form.html', {'formset': formset})

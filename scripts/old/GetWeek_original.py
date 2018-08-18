@@ -1,5 +1,5 @@
 from datetime import datetime, date, timedelta
-def GetWeek(check_date = datetime.now(), initDate = datetime(2017,9,13)):
+def get_week(check_date = datetime.now(), initDate = datetime(2017,9,13)):
     aWeek = timedelta(days = 7)
     myList = []
     for ii in range(0,17):

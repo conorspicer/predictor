@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from .forms import PickFormSetBase
 from fixtures.models import Fixture
-from scripts.get_week import GetWeek
+from scripts.get_week import get_week
 from results.models import UserWeekResult
 from datetime import datetime, timezone, timedelta
 
@@ -17,7 +17,7 @@ class ListSpecificWeekPicks(LoginRequiredMixin, generic.ListView):
         context = super(ListSpecificWeekPicks, self).get_context_data(**kwargs)
         q = self.request.GET.get("week")
         context['input'] = q
-        context['default'] = GetWeek()
+        context['default'] = get_week()
         return context
 
     def get_queryset(self):
@@ -86,7 +86,7 @@ class ListSimpleWeekPicks(LoginRequiredMixin, generic.ListView):
 def UpdatePicks(request):
   if request.method == 'POST':
     action = request.POST.get('action')
-    this_week = GetWeek()
+    this_week = get_week()
     formset = PickFormSetBase(
         request.POST,
         queryset=Pick.objects.filter(
@@ -106,9 +106,9 @@ def UpdatePicks(request):
     redirect('picks:all')
 
   else:
-      this_week = GetWeek()
+      this_week = get_week()
       formset = PickFormSetBase(
-        queryset=Pick.objects.filter(fixture__ko_datetime__gt=datetime.now(timezone.utc)-timedelta(hours=5), user=request.user, fixture__week=GetWeek() ).order_by('fixture__ko_datetime')
+        queryset=Pick.objects.filter(fixture__ko_datetime__gt=datetime.now(timezone.utc)-timedelta(hours=5), user=request.user, fixture__week=get_week() ).order_by('fixture__ko_datetime')
         # queryset=Pick.objects.filter(user=request.user, fixture__week=this_week )
         )
 

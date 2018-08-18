@@ -3,7 +3,7 @@
 
 
 import nflgame
-from scripts.get_week import GetWeek
+from scripts.get_week import get_week
 from fixtures.models import Fixture
 
 
