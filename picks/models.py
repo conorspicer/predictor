@@ -60,7 +60,7 @@ class Pick(models.Model):
     totalpts_pts = property(_totalpts_pts)
 
     def _get_total_score(self):
-        return (self.winner_pts + self.margin_pts + self.totalpts_pts)
+        return self.winner_pts + self.margin_pts + self.totalpts_pts
     points_scored = property(_get_total_score)
 
     def __str__(self):

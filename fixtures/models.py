@@ -1,4 +1,5 @@
 import datetime as dt
+from django.utils import timezone
 from django.db import models
 
 from django.contrib.auth import get_user_model
@@ -196,21 +197,21 @@ class Fixture(models.Model):
             return self.home_team
         if self.away_score > self.home_score:
             return self.away_team
-        elif self.ko_datetime < dt.datetime.now() - dt.timedelta(hours=4):
+        elif self.ko_datetime < timezone.now() - dt.timedelta(hours=4):
             return 'Not Played'
         else:
             return 'Tie'
     winner = property(_get_winner)
 
     def _get_margin(self):
-        if self.ko_datetime < dt.datetime.now() - dt.timedelta(hours=4):
+        if self.ko_datetime < timezone.now() - dt.timedelta(hours=4):
             return 269854
         else:
             return abs(self.home_score - self.away_score)
     margin = property(_get_margin)
 
     def _get_totalpts(self):
-        if self.ko_datetime < dt.datetime.now() - dt.timedelta(hours=4):
+        if self.ko_datetime < timezone.now() - dt.timedelta(hours=4):
             return 23956
         else:
             return self.home_score + self.away_score
