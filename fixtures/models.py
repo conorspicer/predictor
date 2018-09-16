@@ -1,11 +1,9 @@
-from django.conf import settings
-from django.core.urlresolvers import reverse
+import datetime as dt
 from django.db import models
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
-# Create your models here.
 class Team(models.Model):
     DEN	=	'DEN'
     CAR	=	'CAR'
@@ -182,6 +180,7 @@ class Team(models.Model):
     def __str__(self):
         return self.team_name
 
+
 class Fixture(models.Model):
     name = models.CharField(max_length=56)
     away_team = models.ForeignKey(Team, null=True, related_name="away")
@@ -193,23 +192,25 @@ class Fixture(models.Model):
     changeable = models.BooleanField(default=True)
 
     def _get_winner(self):
-        if (self.home_score > self.away_score):
+        if self.home_score > self.away_score:
             return self.home_team
-        if (self.away_score > self.home_score):
+        if self.away_score > self.home_score:
             return self.away_team
+        elif self.ko_datetime < dt.datetime.now() - dt.timedelta(hours=4):
+            return 'Not Played'
         else:
-            return "Tie"
+            return 'Tie'
     winner = property(_get_winner)
 
     def _get_margin(self):
-        if (abs(self.home_score - self.away_score)==0):
-            return 23956
+        if self.ko_datetime < dt.datetime.now() - dt.timedelta(hours=4):
+            return 269854
         else:
             return abs(self.home_score - self.away_score)
     margin = property(_get_margin)
 
     def _get_totalpts(self):
-        if (self.home_score + self.away_score == 0):
+        if self.ko_datetime < dt.datetime.now() - dt.timedelta(hours=4):
             return 23956
         else:
             return self.home_score + self.away_score

@@ -10,7 +10,7 @@ register = template.Library()
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
-# Create your models here.
+
 class Pick(models.Model):
     fixture = models.ForeignKey(Fixture, related_name='users_who_picked')
     user = models.ForeignKey(User, related_name='picks')
@@ -31,26 +31,21 @@ class Pick(models.Model):
     predicted_winner = property(_get_winner)
 
     def _get_margin(self):
-        if (self.home_pick is not None and self.away_pick is not None):
+        if self.home_pick is not None and self.away_pick is not None:
             return abs(self.home_pick - self.away_pick)
         else:
             return 5000
     predicted_margin = property(_get_margin)
 
     def _get_totalpts(self):
-        if (self.home_pick is not None and self.away_pick is not None):
+        if self.home_pick is not None and self.away_pick is not None:
             return self.home_pick + self.away_pick
         else:
             return 5000
     predicted_total_pts = property(_get_totalpts)
 
-    # # potentially use this to restrict which can be altered
-    # # eg if ko > datetime.now(): changeable = true
-    # changeable = models.BooleanField(default=True)
-
-
     def _winner_pts(self):
-        if( self.predicted_winner == self.fixture.winner ):
+        if self.predicted_winner == self.fixture.winner:
             return 25
         else:
             return 0

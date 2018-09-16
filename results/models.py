@@ -6,6 +6,7 @@ from playoff_teams.models import PlayoffPick
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
+
 class UserWeekResult(models.Model):
     user = models.ForeignKey(User, related_name='player_week')
     week = models.PositiveIntegerField(null=True, blank=True)
@@ -37,6 +38,7 @@ class UserWeekResult(models.Model):
             "Week",
             str(self.week),
         ])
+
 
 class UserTotalResult(models.Model):
     user = models.ForeignKey(User, related_name='player_total')
