@@ -1,16 +1,15 @@
 from django.contrib.auth.mixins import(LoginRequiredMixin,PermissionRequiredMixin)
 from django.contrib.auth.decorators import login_required
-from django.views import generic
-from fixtures.models import Fixture, Team
-from datetime import datetime, date, timedelta
+from fixtures.models import Fixture
 from scripts.get_week import get_week
 from .forms import FixtureFormSetBase
 from django.shortcuts import redirect, render
-from django.template import RequestContext
 from django.views import generic
+
 
 class ListSpecificWeekFixtures(LoginRequiredMixin, generic.ListView):
     model = Fixture
+
     def get_context_data(self, **kwargs):
         context = super(ListSpecificWeekFixtures, self).get_context_data(**kwargs)
         q = self.request.GET.get("week")
@@ -21,11 +20,10 @@ class ListSpecificWeekFixtures(LoginRequiredMixin, generic.ListView):
         if self.request.GET.get("week"):
             selection = self.request.GET.get("week")
             queryset = Fixture.objects.filter(week=selection)
-            # queryset = Fixture.objects.filter(week=selection).order_by('ko_datetime')
         else:
             queryset = Fixture.objects.all()
-            # queryset = Fixture.objects.all().order_by('ko_datetime')
         return queryset
+
 
 @login_required
 def UpdateFixtures(request):

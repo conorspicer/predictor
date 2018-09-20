@@ -1,13 +1,9 @@
-from django.conf import settings
-from django.core.urlresolvers import reverse
 from django.db import models
-from fixtures.models import Team, Fixture
-
-
+from fixtures.models import Fixture
 from django import template
-register = template.Library()
-
 from django.contrib.auth import get_user_model
+
+register = template.Library()
 User = get_user_model()
 
 
@@ -19,10 +15,10 @@ class Pick(models.Model):
     lock = models.BooleanField(default=False)
 
     def _get_winner(self):
-        if (self.home_pick is not None and self.away_pick is not None):
-            if (self.home_pick > self.away_pick):
+        if self.home_pick is not None and self.away_pick is not None:
+            if self.home_pick > self.away_pick:
                 return self.fixture.home_team
-            if (self.away_pick > self.home_pick):
+            if self.away_pick > self.home_pick:
                 return self.fixture.away_team
             else:
                 return "Tie"
@@ -52,7 +48,7 @@ class Pick(models.Model):
     winner_pts = property(_winner_pts)
 
     def _margin_pts(self):
-        return  max(10 - abs(self.predicted_margin - self.fixture.margin), 0)
+        return max(10 - abs(self.predicted_margin - self.fixture.margin), 0)
     margin_pts = property(_margin_pts)
 
     def _totalpts_pts(self):

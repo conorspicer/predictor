@@ -3,6 +3,7 @@ from django.views.generic import ListView
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
+
 class HomePage(ListView):
     context_object_name = 'results_on_home'
     template_name = 'index.html'
@@ -20,6 +21,7 @@ class HomePage(ListView):
         # context['lewismead'] = UserWeekResult.objects.filter(user__username = 'lewismead').order_by('week')
         return context
 
+
 class TestPage(TemplateView):
     template_name = 'test.html'
 
@@ -27,9 +29,6 @@ class TestPage(TemplateView):
 class ThanksPage(TemplateView):
     template_name = 'thanks.html'
 
-#
-# class HomePage(TemplateView):
-#     template_name = "index.html"
 
 class HOFPage(TemplateView):
     template_name = "HOF.html"

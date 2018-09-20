@@ -1,77 +1,77 @@
-import datetime as dt
 from django.utils import timezone
 from django.db import models
-
 from django.contrib.auth import get_user_model
+
 User = get_user_model()
 
+
 class Team(models.Model):
-    DEN	=	'DEN'
-    CAR	=	'CAR'
-    TB	=	'TB'
-    ATL	=	'ATL'
-    BAL	=	'BAL'
-    BUF	=	'BUF'
-    HOU	=	'HOU'
-    CHI	=	'CHI'
-    JAC	=	'JAC'
-    GB	=	'GB'
-    KC	=	'KC'
-    LAC	=	'LAC'
-    NO	=	'NO'
-    OAK	=	'OAK'
-    NYJ	=	'NYJ'
-    CIN	=	'CIN'
-    PHI	=	'PHI'
-    CLE	=	'CLE'
-    TEN	=	'TEN'
-    MIN	=	'MIN'
-    SEA	=	'SEA'
-    MIA	=	'MIA'
-    DAL	=	'DAL'
-    NYG	=	'NYG'
-    IND	=	'IND'
-    DET	=	'DET'
-    ARI	=	'ARI'
-    NE	=	'NE'
-    WAS	=	'WAS'
-    PIT	=	'PIT'
-    SF	=	'SF'
-    LA	=	'LA'
+    DEN = 'DEN'
+    CAR = 'CAR'
+    TB = 'TB'
+    ATL = 'ATL'
+    BAL = 'BAL'
+    BUF = 'BUF'
+    HOU = 'HOU'
+    CHI = 'CHI'
+    JAC = 'JAC'
+    GB = 'GB'
+    KC = 'KC'
+    LAC = 'LAC'
+    NO = 'NO'
+    OAK = 'OAK'
+    NYJ = 'NYJ'
+    CIN = 'CIN'
+    PHI = 'PHI'
+    CLE = 'CLE'
+    TEN = 'TEN'
+    MIN = 'MIN'
+    SEA = 'SEA'
+    MIA = 'MIA'
+    DAL = 'DAL'
+    NYG = 'NYG'
+    IND = 'IND'
+    DET = 'DET'
+    ARI = 'ARI'
+    NE = 'NE'
+    WAS = 'WAS'
+    PIT = 'PIT'
+    SF = 'SF'
+    LA = 'LA'
 
     NAMES = (
-    (DEN,'DEN'),
-    (CAR,'CAR'),
-    (TB,'TB'),
-    (ATL,'ATL'),
-    (BAL,'BAL'),
-    (BUF,'BUF'),
-    (HOU,'HOU'),
-    (CHI,'CHI'),
-    (JAC,'JAC'),
-    (GB,'GB'),
-    (KC,'KC'),
-    (LAC,'LAC'),
-    (NO,'NO'),
-    (OAK,'OAK'),
-    (NYJ,'NYJ'),
-    (CIN,'CIN'),
-    (PHI,'PHI'),
-    (CLE,'CLE'),
-    (TEN,'TEN'),
-    (MIN,'MIN'),
-    (SEA,'SEA'),
-    (MIA,'MIA'),
-    (DAL,'DAL'),
-    (NYG,'NYG'),
-    (IND,'IND'),
-    (DET,'DET'),
-    (ARI,'ARI'),
-    (NE,'NE'),
-    (WAS,'WAS'),
-    (PIT,'PIT'),
-    (SF,'SF'),
-    (LA,'LA'),
+        (DEN, 'DEN'),
+        (CAR, 'CAR'),
+        (TB, 'TB'),
+        (ATL, 'ATL'),
+        (BAL, 'BAL'),
+        (BUF, 'BUF'),
+        (HOU, 'HOU'),
+        (CHI, 'CHI'),
+        (JAC, 'JAC'),
+        (GB, 'GB'),
+        (KC, 'KC'),
+        (LAC, 'LAC'),
+        (NO, 'NO'),
+        (OAK, 'OAK'),
+        (NYJ, 'NYJ'),
+        (CIN, 'CIN'),
+        (PHI, 'PHI'),
+        (CLE, 'CLE'),
+        (TEN, 'TEN'),
+        (MIN, 'MIN'),
+        (SEA, 'SEA'),
+        (MIA, 'MIA'),
+        (DAL, 'DAL'),
+        (NYG, 'NYG'),
+        (IND, 'IND'),
+        (DET, 'DET'),
+        (ARI, 'ARI'),
+        (NE, 'NE'),
+        (WAS, 'WAS'),
+        (PIT, 'PIT'),
+        (SF, 'SF'),
+        (LA, 'LA'),
     )
 
     Bills = 'Bills'
@@ -108,45 +108,45 @@ class Team(models.Model):
     Seahawks = 'Seahawks'
 
     TEAMS = (
-    (Bills,'Bills'),
-    (Dolphins,'Dolphins'),
-    (Patriots,'Patriots'),
-    (Jets,'Jets'),
-    (Ravens,'Ravens'),
-    (Bengals,'Bengals'),
-    (Browns,'Browns'),
-    (Steelers,'Steelers'),
-    (Texans,'Texans'),
-    (Colts,'Colts'),
-    (Jaguars,'Jaguars'),
-    (Titans,'Titans'),
-    (Broncos,'Broncos'),
-    (Chiefs,'Chiefs'),
-    (Raiders,'Raiders'),
-    (Chargers,'Chargers'),
-    (Cowboys,'Cowboys'),
-    (Giants,'Giants'),
-    (Eagles,'Eagles'),
-    (Redskins,'Redskins'),
-    (Bears,'Bears'),
-    (Lions,'Lions'),
-    (Packers,'Packers'),
-    (Vikings,'Vikings'),
-    (Falcons,'Falcons'),
-    (Panthers,'Panthers'),
-    (Saints,'Saints'),
-    (Buccaneers,'Buccaneers'),
-    (Cardinals,'Cardinals'),
-    (Rams,'Rams'),
-    (forty,'49ers'),
-    (Seahawks,'Seahawks'),
+        (Bills, 'Bills'),
+        (Dolphins, 'Dolphins'),
+        (Patriots, 'Patriots'),
+        (Jets, 'Jets'),
+        (Ravens, 'Ravens'),
+        (Bengals, 'Bengals'),
+        (Browns, 'Browns'),
+        (Steelers, 'Steelers'),
+        (Texans, 'Texans'),
+        (Colts, 'Colts'),
+        (Jaguars, 'Jaguars'),
+        (Titans, 'Titans'),
+        (Broncos, 'Broncos'),
+        (Chiefs, 'Chiefs'),
+        (Raiders, 'Raiders'),
+        (Chargers, 'Chargers'),
+        (Cowboys, 'Cowboys'),
+        (Giants, 'Giants'),
+        (Eagles, 'Eagles'),
+        (Redskins, 'Redskins'),
+        (Bears, 'Bears'),
+        (Lions, 'Lions'),
+        (Packers, 'Packers'),
+        (Vikings, 'Vikings'),
+        (Falcons, 'Falcons'),
+        (Panthers, 'Panthers'),
+        (Saints, 'Saints'),
+        (Buccaneers, 'Buccaneers'),
+        (Cardinals, 'Cardinals'),
+        (Rams, 'Rams'),
+        (forty, '49ers'),
+        (Seahawks, 'Seahawks'),
     )
 
     AFC = 'AFC'
     NFC = 'NFC'
     CONFS = (
-    (AFC, 'AFC'),
-    (NFC, 'NFC'),
+        (AFC, 'AFC'),
+        (NFC, 'NFC'),
     )
 
     AFC_EAST = 'AFC_EAST'
@@ -159,14 +159,14 @@ class Team(models.Model):
     NFC_WEST = 'NFC_WEST'
 
     DIVISIONS = (
-    (AFC_EAST, 'AFC_EAST'),
-    (AFC_NORTH, 'AFC_NORTH'),
-    (AFC_SOUTH, 'AFC_SOUTH'),
-    (AFC_WEST, 'AFC_WEST'),
-    (NFC_EAST, 'NFC_EAST'),
-    (NFC_NORTH, 'NFC_NORTH'),
-    (NFC_SOUTH, 'NFC_SOUTH'),
-    (NFC_WEST, 'NFC_WEST'),
+        (AFC_EAST, 'AFC_EAST'),
+        (AFC_NORTH, 'AFC_NORTH'),
+        (AFC_SOUTH, 'AFC_SOUTH'),
+        (AFC_WEST, 'AFC_WEST'),
+        (NFC_EAST, 'NFC_EAST'),
+        (NFC_NORTH, 'NFC_NORTH'),
+        (NFC_SOUTH, 'NFC_SOUTH'),
+        (NFC_WEST, 'NFC_WEST'),
     )
 
     short_name = models.CharField(max_length=5, choices=NAMES, null=True)

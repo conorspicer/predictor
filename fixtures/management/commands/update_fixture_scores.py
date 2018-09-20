@@ -6,8 +6,9 @@ import nflgame
 # from fixtures.models import Fixture
 from django.core.management.base import BaseCommand
 
+
 class Command(BaseCommand):
-    def UpdateFixtureScores():
+    def UpdateFixtureScores(self):
         print("yay!! It's working")
         # for f in Fixture.objects.filter(week__lte=get_week()):
         #     if f.away_team.short_name == "JAC":
