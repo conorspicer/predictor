@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'djangosecure',
     'bootstrap3',
     'django_celery_beat',
     'accounts',
@@ -56,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'djangosecure.middleware.SecurityMiddleware',
 ]
 
 ROOT_URLCONF = 'predictor.urls'
@@ -155,3 +157,5 @@ MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = "test"
 LOGOUT_REDIRECT_URL = "thanks"
+
+SECURE_SSL_REDIRECT = True
