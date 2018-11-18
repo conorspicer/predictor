@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r"^$", views.HomePage.as_view(), name="home"),
-    url(r"^test/$", views.TestPage.as_view(), name="test"),
+    url(r"^test/$", include("picks.urls", namespace="picks")),
     url(r"^thanks/$", views.ThanksPage.as_view(), name="thanks"),
     url(r"^HOF/$", views.HOFPage.as_view(), name="HOF"),
     url(r"^admin/", admin.site.urls),
@@ -17,4 +17,4 @@ urlpatterns = [
     url(r"^results/", include("results.urls", namespace="results")),
     url(r"^playoff_teams/", include("playoff_teams.urls", namespace="playoff_teams")),
 
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

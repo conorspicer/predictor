@@ -19,7 +19,7 @@ import nflgame
 games = []
 game_keys = nflgame.sched.games.keys()
 for g in game_keys:
-    if g[:4] == '2017' and nflgame.sched.games[g]['season_type'] == "REG" and nflgame.sched.games[g]['month']>2:
+    if g[:4] == '2017' and nflgame.sched.games[g]['season_type'] == "REG" and nflgame.sched.games[g]['month'] > 2:
         games.append(nflgame.sched.games[g])
 # print(len(games))
 
@@ -29,19 +29,19 @@ for g in games:
     if g['home'] == "JAX":
         g['home'] = "JAC"
     t = datetime(
-    int(g['year']),
-    int(g['month']),
-    int(g['day']),
-    (int(g['time'].split(':')[0])+12)%24,
-    int(g['time'].split(':')[1]),
+        int(g['year']),
+        int(g['month']),
+        int(g['day']),
+        (int(g['time'].split(':')[0])+12) % 24,
+        int(g['time'].split(':')[1]),
     )
     new_entry = Fixture(
-    name=g['gamekey'],
-    away_team = Team.objects.get(short_name=g['away']),
-    home_team = Team.objects.get(short_name=g['home']),
-    away_score = 0,
-    home_score = 0,
-    week = g['week'],
-    ko_datetime = t
+        name=g['gamekey'],
+        away_team=Team.objects.get(short_name=g['away']),
+        home_team=Team.objects.get(short_name=g['home']),
+        away_score=0,
+        home_score=0,
+        week=g['week'],
+        ko_datetime=t
     )
     new_entry.save()

@@ -3,10 +3,12 @@ from datetime import datetime, timedelta
 
 def get_week(check_date=datetime.now(), init_date=datetime(2018, 9, 11, 6)):
     """
-    Returns the week of the season
-    :param check_date:
-    :param init_date:
-    :return:
+    Returns the week of the season by returning min of all future weeks
+    A week changes over at 6am on Tuesday
+
+    :param check_date: the date to generate week for, should generally be datetime.now()
+    :param init_date: the date we define the first week of the season to start on
+    :return: _: the numeric week of the season
     """
     a_week = timedelta(weeks=1)
     date_list = []

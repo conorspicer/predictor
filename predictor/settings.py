@@ -11,23 +11,16 @@ TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
 
 AUTH_PROFILE_MODULE = 'accounts.User'
 
-CRISPY_TEMPLATE_PACK = 'bootstrap'
-
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-# DEBUG = True
-DEBUG = False
-
-# Google Analytics
-GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-103968562-1'
-GOOGLE_ANALYTICS_DOMAIN = 'nflpredictor.pythonanywhere.com'
+DEBUG = True
+# DEBUG = False
 
 
 ALLOWED_HOSTS = [
-'127.0.0.1',
-'nflpredictor.pythonanywhere.com',
+    '127.0.0.1',
+    'nflpredictor.pythonanywhere.com',
 ]
-
 
 # Application definition
 
@@ -41,7 +34,6 @@ INSTALLED_APPS = [
     'django_extensions',
     'djangosecure',
     'bootstrap3',
-    'django_celery_beat',
     'accounts',
     'fixtures',
     'picks',
@@ -85,8 +77,6 @@ WSGI_APPLICATION = 'predictor.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
-
 
 DATABASES = {
     'default': {
@@ -142,8 +132,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
@@ -158,4 +146,12 @@ MEDIA_URL = '/media/'
 LOGIN_REDIRECT_URL = "test"
 LOGOUT_REDIRECT_URL = "thanks"
 
+CRISPY_TEMPLATE_PACK = 'bootstrap'
+
 SECURE_SSL_REDIRECT = True
+
+# Google Analytics
+GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-103968562-1'
+GOOGLE_ANALYTICS_DOMAIN = 'nflpredictor.pythonanywhere.com'
+
+
