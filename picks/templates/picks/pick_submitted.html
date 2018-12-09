@@ -12,6 +12,8 @@
         {% for ii in "xxxxxxxxxxxxxxxxxxxxx" %}
             {% if forloop.counter == input|add:"0" %}
                 <option selected="selected">{{ forloop.counter }}</option>
+            {% elif forloop.counter == current_week|add:"0" %}
+                <option selected="selected">{{ forloop.counter }}</option>
             {% else %}
                 <option>{{ forloop.counter }}</option>
             {% endif %}

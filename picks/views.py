@@ -23,9 +23,14 @@ class ListSpecificWeekPicks(LoginRequiredMixin, generic.ListView):
         queryset = Pick.objects.all()
         if self.request.GET.get("week"):
             selection = self.request.GET.get("week")
-            queryset = Pick.objects.filter(user=self.request.user, fixture__week=selection).order_by('fixture__ko_datetime')
+            queryset = Pick.objects\
+                .filter(user=self.request.user,
+                        fixture__week=selection)\
+                .order_by('fixture__ko_datetime')
         else:
-            queryset = Pick.objects.filter(user=self.request.user).order_by('fixture__ko_datetime')
+            queryset = Pick.objects\
+                .filter(user=self.request.user)\
+                .order_by('fixture__ko_datetime')
         return queryset
 
 
