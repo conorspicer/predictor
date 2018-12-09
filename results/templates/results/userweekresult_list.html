@@ -12,8 +12,10 @@
       {% if not forloop.last %}
         <li><h4><strong>{{r.total_points_scored}}</strong> - @{{r.user.username}}</h4></li>
       {% else %}
-        <li><img src="{% static 'logos/spoon.jpeg' %}" style="width:30px;height:30px;">
-          <h4><strong>{{r.total_points_scored}}</strong> - @{{r.user.username}}</h4>
+        <li>
+          <h4><img src="{% static 'logos/spoon.jpeg' %}" style="width:30px;height:30px;">
+            <strong>{{r.total_points_scored}}</strong> - @{{r.user.username}}
+          </h4>
         </li>
       {% endif %}
     {% endfor %}
