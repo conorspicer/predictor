@@ -28,10 +28,13 @@ class ListSpecificWeekPicks(LoginRequiredMixin, generic.ListView):
             queryset = Pick.objects.filter(user=self.request.user).order_by('fixture__ko_datetime')
         return queryset
 
+
 # All Users' picks less than 1hr to KO, in play or completed
 class ListSubmittedWeekPicks(LoginRequiredMixin, generic.ListView):
+
     model = Pick
     template_name = 'picks/pick_submitted.html'
+
     def get_context_data(self, **kwargs):
         context = super(ListSubmittedWeekPicks, self).get_context_data(**kwargs)
         q = self.request.GET.get("week")
@@ -48,6 +51,7 @@ class ListSubmittedWeekPicks(LoginRequiredMixin, generic.ListView):
             ).order_by('fixture__ko_datetime')
         else:
             queryset = Pick.objects.filter(
+                fixture__week=get_week(),
                 fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3)
             ).order_by('fixture__ko_datetime')
         return queryset
@@ -89,32 +93,32 @@ class ListSimpleWeekPicks(LoginRequiredMixin, generic.ListView):
 # Picks for logged in user, for current week, with >1hr to KO
 @login_required
 def UpdatePicks(request):
-  if request.method == 'POST':
-    action = request.POST.get('action')
-    this_week = get_week()
-    formset = PickFormSetBase(
-        request.POST,
-        queryset=Pick.objects.filter(
-            fixture__ko_datetime__gt=datetime.now(timezone.utc)-timedelta(hours=5),
-            user=request.user,
-            fixture__week=this_week
-            ).order_by('fixture__ko_datetime')
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        this_week = get_week()
+        formset = PickFormSetBase(
+            request.POST,
+            queryset=Pick.objects.filter(
+                fixture__ko_datetime__gt=datetime.now(timezone.utc)-timedelta(hours=5),
+                user=request.user,
+                fixture__week=this_week
+                ).order_by('fixture__ko_datetime')
+            )
+
+        print(formset.errors)
+        if formset.is_valid():
+            for form in formset.forms:
+                if action == 'save':
+                    form.save()
+
+        redirect('picks:all')
+
+    else:
+        formset = PickFormSetBase(
+            queryset=Pick.objects.filter(
+                fixture__ko_datetime__gt=datetime.now(timezone.utc)-timedelta(hours=5),
+                user=request.user,
+                fixture__week=get_week()).order_by('fixture__ko_datetime')
         )
 
-    print(formset.errors)
-    if formset.is_valid():
-        for form in formset.forms:
-            if action == 'save':
-                form.save()
-
-    redirect('picks:all')
-
-  else:
-      formset = PickFormSetBase(
-        queryset=Pick.objects.filter(
-            fixture__ko_datetime__gt=datetime.now(timezone.utc)-timedelta(hours=5),
-            user=request.user,
-            fixture__week=get_week()).order_by('fixture__ko_datetime')
-        )
-
-  return render(request, 'picks/pick_form.html', {'formset': formset})
+    return render(request, 'picks/pick_form.html', {'formset': formset})

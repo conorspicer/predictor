@@ -11,7 +11,6 @@ import numpy as np
 import pandas as pd
 import sys
 sys.path.append('/Users/conorspicer/Documents/Udemy/Django/My_code/predictor/scripts/stats')
-from functions import independent_vars, relative_independent_vars
 
 # Read in data and exclude week 1 games
 df = pd.read_csv('scripts/stats/2009_to_2017_data_complete.csv', index_col=0)
