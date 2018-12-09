@@ -9,7 +9,6 @@
   <hr>
   <ul style="list-style: none;">
     {% for r in totals %}
-    {% for item in menu_items %}
       {% if not forloop.last %}
         <li><h4><strong>{{r.total_points_scored}}</strong> - @{{r.user.username}}</h4></li>
       {% else %}
@@ -17,7 +16,6 @@
           <h4><strong>{{r.total_points_scored}}</strong> - @{{r.user.username}}</h4>
         </li>
       {% endif %}
-
     {% endfor %}
   </ul><hr><hr>
 
