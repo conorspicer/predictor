@@ -14,13 +14,11 @@ class ListSpecificWeekPicks(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ListSpecificWeekPicks, self).get_context_data(**kwargs)
-        q = self.request.GET.get("week")
+        q = self.request.GET.get("week", get_week())
         context['input'] = q
-        context['default'] = get_week()
         return context
 
     def get_queryset(self):
-        queryset = Pick.objects.all()
         if self.request.GET.get("week"):
             selection = self.request.GET.get("week")
             queryset = Pick.objects\
@@ -42,9 +40,8 @@ class ListSubmittedWeekPicks(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ListSubmittedWeekPicks, self).get_context_data(**kwargs)
-        q = self.request.GET.get("week")
+        q = self.request.GET.get("week", get_week())
         context['input'] = q
-        context['current_week'] = get_week()
         return context
 
     def get_queryset(self):
@@ -80,13 +77,11 @@ class ListAllWeekPicks(LoginRequiredMixin, generic.ListView):
         context = super(ListAllWeekPicks, self).get_context_data(**kwargs)
         q = self.request.GET.get("week", get_week())
         context['input'] = q
-        # context['current_week'] = get_week()
         return context
 
     def get_queryset(self):
         # If all selected, don't filter, just order
         if self.request.GET.get("week") == 'All':
-            selection = self.request.GET.get("week")
             queryset = Pick.objects\
                 .order_by('fixture__ko_datetime')
 
@@ -105,6 +100,7 @@ class ListAllWeekPicks(LoginRequiredMixin, generic.ListView):
         return queryset
 
 
+# List all picks
 class ListSimpleWeekPicks(LoginRequiredMixin, generic.ListView):
     model = Pick
     template_name = 'picks/pick_simple.html'
@@ -112,9 +108,13 @@ class ListSimpleWeekPicks(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         if self.request.GET.get("week"):
             selection = self.request.GET.get("week")
-            queryset = Pick.objects.filter(fixture__week=selection).order_by('fixture__ko_datetime')
+            queryset = Pick.objects\
+                .filter(fixture__week=selection)\
+                .order_by('fixture__ko_datetime')
         else:
-            queryset = Pick.objects.all().order_by('fixture__ko_datetime')
+            queryset = Pick.objects\
+                .all()\
+                .order_by('fixture__ko_datetime')
         return queryset
 
 
