@@ -10,8 +10,6 @@
 
     <select name="week">
         {% for ii in "xxxxxxxxxxxxxxxxxxxxx" %}
-            <!--{% if forloop.counter == current_week|add:"0" %}-->
-                <!--<option selected="selected">{{ forloop.counter }}</option>-->
             {% if forloop.counter == input|add:"0" %}
                 <option selected="selected">{{ forloop.counter }}</option>
             {% else %}
