@@ -78,9 +78,9 @@ class ListAllWeekPicks(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ListAllWeekPicks, self).get_context_data(**kwargs)
-        q = self.request.GET.get("week")
+        q = self.request.GET.get("week", get_week())
         context['input'] = q
-        context['current_week'] = get_week()
+        # context['current_week'] = get_week()
         return context
 
     def get_queryset(self):
