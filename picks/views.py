@@ -19,6 +19,32 @@ class ListSpecificWeekPicks(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
+        # If all selected, don't filter, just order
+        if self.request.GET.get("week") == 'All':
+            selection = self.request.GET.get("week")
+            queryset = Pick.objects.filter(
+                user=self.request.user,
+                fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3)
+            ).order_by('fixture__ko_datetime')
+
+        # if a week is defined, filter on that
+        elif self.request.GET.get("week"):
+            selection = self.request.GET.get("week")
+            queryset = Pick.objects.filter(
+                user=self.request.user,
+                fixture__week=selection,
+                fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3)
+            ).order_by('fixture__ko_datetime')
+
+        # otherwise filter to current week
+        else:
+            queryset = Pick.objects\
+                .filter(user=self.request.user,
+                        fixture__week=get_week())\
+                .order_by('fixture__ko_datetime')
+        return queryset
+
+    def get_queryset(self):
         if self.request.GET.get("week"):
             selection = self.request.GET.get("week")
             queryset = Pick.objects\
