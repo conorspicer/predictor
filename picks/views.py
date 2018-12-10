@@ -47,21 +47,6 @@ class ListSubmittedWeekPicks(LoginRequiredMixin, generic.ListView):
         context['current_week'] = get_week()
         return context
 
-    # def get_queryset(self):
-    #     # queryset = Pick.objects.all()
-    #     if self.request.GET.get("week"):
-    #         selection = self.request.GET.get("week")
-    #         queryset = Pick.objects.filter(
-    #             fixture__week=selection,
-    #             fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3)
-    #         ).order_by('fixture__ko_datetime')
-    #     else:
-    #         queryset = Pick.objects.filter(
-    #             fixture__week=get_week(),
-    #             fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3)
-    #         ).order_by('fixture__ko_datetime')
-    #     return queryset
-
     def get_queryset(self):
         # If all selected, don't filter, just order
         if self.request.GET.get("week") == 'All':

@@ -9,4 +9,5 @@ class PickForm(forms.ModelForm):
         exclude = ()
 
 
-PickFormSetBase = modelformset_factory(Pick, extra=0, form=PickForm, fields=('fixture', 'away_pick', 'home_pick', 'lock'))
+PickFormSetBase = modelformset_factory(Pick, extra=0, form=PickForm,
+                                       fields=('fixture', 'away_pick', 'home_pick', 'lock'))
