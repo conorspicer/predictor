@@ -6,18 +6,26 @@
 
 <P>ALL PICKS</P>
 <form class="form-inline" method="GET">
-  <label for="week">SELECT WEEK :  </label>
-  <select name="week">
-    {% for ii in "xxxxxxxxxxxxxxxxxxxxx" %}
-      {% if forloop.counter == input|add:"0" %}
-        <option selected="selected">{{ forloop.counter }}</option>
-      {% else %}
-          <option>{{ forloop.counter }}</option>
-      {% endif %}
-    {% endfor %}
+    <label for="week">SELECT WEEK : </label>
 
-  </select>
- <input type="submit" value="Submit" />
+    <select name="week">
+        {% for ii in "xxxxxxxxxxxxxxxxxxxxx" %}
+            {% if forloop.counter == input|add:"0" %}
+                <option selected="selected">{{ forloop.counter }}</option>
+            {% elif forloop.counter == current_week|add:"0" %}
+                <option selected="selected">{{ forloop.counter }}</option>
+            {% else %}
+                <option>{{ forloop.counter }}</option>
+            {% endif %}
+        {% endfor %}
+
+        {% if input == "All" %}
+            <option selected="selected">All</option>
+        {% else %}
+            <option>All</option>
+        {% endif %}
+    </select>
+    <input type="submit" value="Submit"/>
 </form>
 
 <table class="table">
