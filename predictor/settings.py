@@ -24,8 +24,8 @@ GOOGLE_ANALYTICS_DOMAIN = 'nflpredictor.pythonanywhere.com'
 
 
 ALLOWED_HOSTS = [
-'127.0.0.1',
-'nflpredictor.pythonanywhere.com',
+    '127.0.0.1',
+    'nflpredictor.pythonanywhere.com',
 ]
 
 

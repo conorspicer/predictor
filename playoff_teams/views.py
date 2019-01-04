@@ -1,4 +1,3 @@
-from fixtures.models import Team
 from django.views import generic
 from .models import PlayoffPick
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -10,6 +9,14 @@ class PlayoffPickList(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return PlayoffPick.objects.filter(user=self.request.user)
+
+
+class PlayoffPickListAll(LoginRequiredMixin, generic.ListView):
+    model = PlayoffPick
+    template_name = 'playoff_teams/templates/playoff_teams/playoffpick_list.html'
+
+    def get_queryset(self):
+        return PlayoffPick.objects.all()
 
 
 class PlayoffPickUpdate(LoginRequiredMixin, generic.UpdateView):
@@ -35,3 +42,4 @@ class PlayoffPickUpdate(LoginRequiredMixin, generic.UpdateView):
 
     def get_object(self):
         return PlayoffPick.objects.get(user=self.request.user)
+
