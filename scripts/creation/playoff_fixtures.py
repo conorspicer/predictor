@@ -2,8 +2,9 @@ from django.contrib.auth.models import User
 from fixtures.models import Fixture
 from picks.models import Pick
 from results.models import UserWeekResult
+from scripts.get_week import get_week
 
-current_week = 18
+current_week = get_week()
 
 for person in User.objects.all():
     for game in Fixture.objects.filter(week=current_week):
