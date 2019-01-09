@@ -77,7 +77,8 @@ class ListSubmittedWeekPicks(LoginRequiredMixin, generic.ListView):
         # otherwise filter to current week
         else:
             queryset = Pick.objects\
-                .filter(fixture__week=get_week())\
+                .filter(fixture__week=get_week(),
+                        fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3))\
                 .order_by('fixture__ko_datetime')
         return queryset
 
