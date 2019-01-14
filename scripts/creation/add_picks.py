@@ -3,7 +3,7 @@ Run this using:
 
 webapp summary screen > launch console with this venv
 cd predictor
-python manage.py shell
+python manage.py shell < scripts/add_picks.py
 
 """
 
