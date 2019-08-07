@@ -21,9 +21,9 @@ class ListSpecificWeekPicks(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         # If all selected, don't filter, just order
         if self.request.GET.get("week") == 'All':
-            selection = self.request.GET.get("week")
             queryset = Pick.objects.filter(
                 user=self.request.user,
+                fixture__changeable=1,
                 fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3)
             ).order_by('fixture__ko_datetime')
 
@@ -33,14 +33,16 @@ class ListSpecificWeekPicks(LoginRequiredMixin, generic.ListView):
             queryset = Pick.objects.filter(
                 user=self.request.user,
                 fixture__week=selection,
+                fixture__changeable=1,
                 fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3)
             ).order_by('fixture__ko_datetime')
 
         # otherwise filter to current week
         else:
-            queryset = Pick.objects\
+            queryset = Pick.objects \
                 .filter(user=self.request.user,
-                        fixture__week=get_week())\
+                        fixture__changeable=1,
+                        fixture__week=get_week()) \
                 .order_by('fixture__ko_datetime')
 
         return queryset
@@ -48,7 +50,6 @@ class ListSpecificWeekPicks(LoginRequiredMixin, generic.ListView):
 
 # All Users' picks less than 1hr to KO, in play or completed
 class ListSubmittedWeekPicks(LoginRequiredMixin, generic.ListView):
-
     model = Pick
     template_name = 'picks/pick_submitted.html'
 
@@ -61,9 +62,9 @@ class ListSubmittedWeekPicks(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         # If all selected, don't filter, just order
         if self.request.GET.get("week") == 'All':
-            selection = self.request.GET.get("week")
             queryset = Pick.objects.filter(
-                fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3)
+                fixture__changeable=1,
+                fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3),
             ).order_by('fixture__ko_datetime')
 
         # if a week is defined, filter on that
@@ -71,14 +72,16 @@ class ListSubmittedWeekPicks(LoginRequiredMixin, generic.ListView):
             selection = self.request.GET.get("week")
             queryset = Pick.objects.filter(
                 fixture__week=selection,
+                fixture__changeable=1,
                 fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3)
             ).order_by('fixture__ko_datetime')
 
         # otherwise filter to current week
         else:
-            queryset = Pick.objects\
+            queryset = Pick.objects \
                 .filter(fixture__week=get_week(),
-                        fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3))\
+                        fixture__changeable=1,
+                        fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3)) \
                 .order_by('fixture__ko_datetime')
         return queryset
 
@@ -97,20 +100,23 @@ class ListAllWeekPicks(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         # If all selected, don't filter, just order
         if self.request.GET.get("week") == 'All':
-            queryset = Pick.objects\
+            queryset = Pick.objects \
+                .filter(fixture__changeable=1) \
                 .order_by('fixture__ko_datetime')
 
         # if a week is defined, filter on that
         elif self.request.GET.get("week"):
             selection = self.request.GET.get("week")
-            queryset = Pick.objects\
-                .filter(fixture__week=selection)\
+            queryset = Pick.objects \
+                .filter(fixture__week=selection,
+                        fixture__changeable=1) \
                 .order_by('fixture__ko_datetime')
 
         # otherwise filter to current week
         else:
-            queryset = Pick.objects\
-                .filter(fixture__week=get_week())\
+            queryset = Pick.objects \
+                .filter(fixture__week=get_week(),
+                        fixture__changeable=1) \
                 .order_by('fixture__ko_datetime')
         return queryset
 
@@ -123,30 +129,32 @@ class ListSimpleWeekPicks(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         if self.request.GET.get("week"):
             selection = self.request.GET.get("week")
-            queryset = Pick.objects\
-                .filter(fixture__week=selection)\
+            queryset = Pick.objects \
+                .filter(fixture__week=selection,
+                        fixture__changeable=1) \
                 .order_by('fixture__ko_datetime')
         else:
-            queryset = Pick.objects\
-                .all()\
+            queryset = Pick.objects \
+                .filter(fixture__changeable=1)\
                 .order_by('fixture__ko_datetime')
         return queryset
 
 
 # Picks for logged in user, for current week, with >1hr to KO
 @login_required
-def UpdatePicks(request):
+def update_picks(request):
     if request.method == 'POST':
         action = request.POST.get('action')
         this_week = get_week()
         formset = PickFormSetBase(
             request.POST,
             queryset=Pick.objects.filter(
-                fixture__ko_datetime__gt=datetime.now(timezone.utc)-timedelta(hours=5),
+                fixture__ko_datetime__gt=datetime.now(timezone.utc) - timedelta(hours=5),
                 user=request.user,
-                fixture__week=this_week
-                ).order_by('fixture__ko_datetime')
-            )
+                fixture__week=this_week,
+                fixture__changeable=1,
+            ).order_by('fixture__ko_datetime')
+        )
 
         print(formset.errors)
         if formset.is_valid():
@@ -159,7 +167,8 @@ def UpdatePicks(request):
     else:
         formset = PickFormSetBase(
             queryset=Pick.objects.filter(
-                fixture__ko_datetime__gt=datetime.now(timezone.utc)-timedelta(hours=5),
+                fixture__changeable=1,
+                fixture__ko_datetime__gt=datetime.now(timezone.utc) - timedelta(hours=5),
                 user=request.user,
                 fixture__week=get_week()).order_by('fixture__ko_datetime')
         )

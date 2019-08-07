@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import(LoginRequiredMixin,PermissionRequiredMixin)
+from django.contrib.auth.mixins import (LoginRequiredMixin, PermissionRequiredMixin)
 from django.contrib.auth.decorators import login_required
 from fixtures.models import Fixture
 from scripts.get_week import get_week
@@ -19,32 +19,32 @@ class ListSpecificWeekFixtures(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         if self.request.GET.get("week"):
             selection = self.request.GET.get("week")
-            queryset = Fixture.objects.filter(week=selection)
+            queryset = Fixture.objects.filter(week=selection, changeable=1)
         else:
-            queryset = Fixture.objects.all()
+            queryset = Fixture.objects.filter(changeable=1)
         return queryset
 
 
 @login_required
-def UpdateFixtures(request):
-  if request.method == 'POST':
-    action = request.POST.get('action')
-    formset = FixtureFormSetBase(
-        request.POST,
-        queryset=Fixture.objects.filter(week=get_week()).order_by('ko_datetime')
+def update_fixtures(request):
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        formset = FixtureFormSetBase(
+            request.POST,
+            queryset=Fixture.objects.filter(week=get_week(), changeable=1).order_by('ko_datetime')
         )
 
-    print(formset.errors)
-    if formset.is_valid():
-        for form in formset.forms:
-            if action == 'save':
-                form.save()
+        print(formset.errors)
+        if formset.is_valid():
+            for form in formset.forms:
+                if action == 'save':
+                    form.save()
 
-    redirect('fixtures:all')
+        redirect('fixtures:all')
 
-  else:
-      formset = FixtureFormSetBase(
-        queryset=Fixture.objects.filter(week=get_week()).order_by('ko_datetime')
+    else:
+        formset = FixtureFormSetBase(
+            queryset=Fixture.objects.filter(week=get_week(), changeable=1).order_by('ko_datetime')
         )
 
-  return render(request, 'fixtures/fixture_form.html', {'formset': formset})
+    return render(request, 'fixtures/fixture_form.html', {'formset': formset})
