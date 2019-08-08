@@ -18,7 +18,7 @@ class UserWeekResult(models.Model):
 
         if self.week < 22:
             counter = 0
-            for p in Pick.objects.filter(user=self.user, fixture__week=self.week):
+            for p in Pick.objects.filter(user=self.user, fixture__week=self.week, fixture__changeable=1):
                 counter += p.points_scored
 
         # Add manual adjustment for playoff scores
