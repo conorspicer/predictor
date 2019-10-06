@@ -39,8 +39,6 @@ class ResultsPage(ListView):
             .filter(user__username='lewismead')\
             .order_by('week')
 
-        # context['valid_picks'] = Pick.objects.filter(fixture__changeable=1)
-
         # If all selected, don't filter, just order
         if self.request.GET.get("week") == 'All':
             context['valid_picks'] = Pick.objects\
@@ -48,7 +46,7 @@ class ResultsPage(ListView):
                     fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=5),
                     fixture__changeable=1
                 )\
-                .order_by('fixture__name')
+                .order_by('fixture__ko_datetime')
 
         # if a week is defined, filter on that
         elif self.request.GET.get("week"):
@@ -57,7 +55,7 @@ class ResultsPage(ListView):
                 .filter(fixture__week=selection,
                         fixture__changeable=1,
                         fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=5))\
-                .order_by('fixture__name')
+                .order_by('fixture__ko_datetime')
 
         # otherwise filter to current week
         else:
@@ -65,7 +63,7 @@ class ResultsPage(ListView):
                 .filter(fixture__week=get_week(),
                         fixture__changeable=1,
                         fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=5))\
-                .order_by('fixture__name')
+                .order_by('fixture__ko_datetime')
 
         q = self.request.GET.get("week")
         context['input'] = q
