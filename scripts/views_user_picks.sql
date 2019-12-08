@@ -87,7 +87,7 @@ FROM
 CREATE OR REPLACE VIEW `ALL_USER_POINTS` AS
 SELECT
   *,
-  'winner_pts' + 'margin_pts' + 'total_score_pts' as 'points'
+  winner_pts + margin_pts + total_score_pts as points
   
 FROM
   ALL_USER_PICKS;
