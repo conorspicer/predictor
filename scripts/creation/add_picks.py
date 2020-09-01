@@ -6,8 +6,8 @@ cd predictor
 python manage.py shell < scripts/creation/add_picks.py
 
 """
-import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "predictor.settings")
+import django
+django.setup()
 
 from django.contrib.auth.models import User
 from fixtures.models import Fixture
