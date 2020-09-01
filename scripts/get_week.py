@@ -5,7 +5,7 @@ def get_week(check_date=datetime.now(), init_date=datetime(2020, 9, 16, 6)):
     """
     Returns the week of the season
     :param check_date:
-    :param init_date:
+    :param init_date: Should be set to the end (i.e. Weds morning) after week 1 ends
     :return:
     """
     a_week = timedelta(weeks=1)
