@@ -92,5 +92,5 @@ SELECT
 FROM
   ALL_USER_PICKS;
 
-
-SELECT * FROM ALL_USER_POINTS;
+-- get all records, avoiding default limit
+SELECT * FROM ALL_USER_POINTS LIMIT 100000;
