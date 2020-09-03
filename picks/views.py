@@ -24,7 +24,7 @@ class ListSpecificWeekPicks(LoginRequiredMixin, generic.ListView):
             queryset = Pick.objects.filter(
                 user=self.request.user,
                 fixture__changeable=1,
-                fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3)
+                fixture__ko_datetime__gt=datetime.now(timezone.utc) - timedelta(hours=3)
             ).order_by('fixture__ko_datetime')
 
         # if a week is defined, filter on that
@@ -34,7 +34,7 @@ class ListSpecificWeekPicks(LoginRequiredMixin, generic.ListView):
                 user=self.request.user,
                 fixture__week=selection,
                 fixture__changeable=1,
-                fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3)
+                fixture__ko_datetime__gt=datetime.now(timezone.utc) - timedelta(hours=3)
             ).order_by('fixture__ko_datetime')
 
         # otherwise filter to current week
