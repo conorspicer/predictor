@@ -34,6 +34,8 @@ class PlayoffPickUpdate(LoginRequiredMixin, generic.UpdateView):
         'nfc_wild1',
         'afc_wild2',
         'nfc_wild2',
+        'afc_wild3',
+        'nfc_wild3',
         'sb_runner_up',
         'sb_winner'
         )
