@@ -14,11 +14,13 @@ from fixtures.models import Fixture
 from picks.models import Pick
 from results.models import UserWeekResult
 from scripts.get_week import get_week
+from datetime import datetime, timedelta, timezone
+
 
 current_week = get_week()
 
 for person in User.objects.all():
-    for game in Fixture.objects.filter(week=current_week):
+    for game in Fixture.objects.filter(week=current_week, ko_datetime__gt=datetime.now(timezone.utc) - timedelta(weeks=52)):
         new_entry = Pick(
             fixture=game,
             user=person,
