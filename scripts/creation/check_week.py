@@ -16,5 +16,6 @@ current_week = get_week()
 
 print('Current week is {week}, number of games this week {games}'.format(
     week=current_week,
-    games=Fixture.objects.filter(week=current_week)))
+    games=len(Fixture.objects.filter(week=current_week))
+))
 
