@@ -1,3 +1,14 @@
+"""
+Run this using:
+
+webapp summary screen > launch console with this venv
+cd predictor
+python manage.py shell < scripts/creation/add_playoff_pick_objects_to_db.py
+
+"""
+import django
+django.setup()
+
 from django.contrib.auth.models import User
 from fixtures.models import Fixture
 from picks.models import Pick
