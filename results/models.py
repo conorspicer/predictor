@@ -22,7 +22,7 @@ class UserWeekResult(models.Model):
             for p in Pick.objects.filter(
                     user=self.user,
                     fixture__week=self.week,
-                    fixture__ko_datetime__gt=datetime.now(timezone.utc) - timedelta(weeks=52))
+                    fixture__ko_datetime__gt=datetime.now(timezone.utc) - timedelta(weeks=52),
                     fixture__changeable=1):
                 counter += p.points_scored
 
