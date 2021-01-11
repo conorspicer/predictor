@@ -2,6 +2,7 @@ from django.db import models
 from fixtures.models import Team, Fixture
 from picks.models import Pick
 from playoff_teams.models import PlayoffPick
+from datetime import datetime, timedelta, timezone
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -18,7 +19,11 @@ class UserWeekResult(models.Model):
 
         if self.week < 22:
             counter = 0
-            for p in Pick.objects.filter(user=self.user, fixture__week=self.week, fixture__changeable=1):
+            for p in Pick.objects.filter(
+                    user=self.user,
+                    fixture__week=self.week,
+                    fixture__ko_datetime__gt=datetime.now(timezone.utc) - timedelta(weeks=52))
+                    fixture__changeable=1):
                 counter += p.points_scored
 
         # Add manual adjustment for playoff scores
