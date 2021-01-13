@@ -24,4 +24,4 @@ for person in User.objects.all():
             fixture=game,
             user=person,
         )
-    new_entry.save()
+        new_entry.save()
