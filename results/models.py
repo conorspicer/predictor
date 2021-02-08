@@ -28,9 +28,9 @@ class UserWeekResult(models.Model):
 
         # Add manual adjustment for playoff scores
         elif self.user.username == 'conorspicer':
-            counter = 500
+            counter = 500 + 50
         elif self.user.username == 'torinmehmet':
-            counter = 400
+            counter = 400 + 50
         elif self.user.username == 'magnusmartinsen':
             counter = 450
         elif self.user.username == 'lewismead':
