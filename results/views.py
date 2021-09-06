@@ -43,7 +43,7 @@ class ResultsPage(ListView):
         if self.request.GET.get("week") == 'All':
             context['valid_picks'] = Pick.objects\
                 .filter(
-                    fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=5),
+                    fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4),
                     fixture__changeable=1
                 )\
                 .order_by('fixture__ko_datetime')
@@ -54,7 +54,7 @@ class ResultsPage(ListView):
             context['valid_picks'] = Pick.objects\
                 .filter(fixture__week=selection,
                         fixture__changeable=1,
-                        fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=5))\
+                        fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4))\
                 .order_by('fixture__ko_datetime')
 
         # otherwise filter to current week
@@ -62,7 +62,7 @@ class ResultsPage(ListView):
             context['valid_picks'] = Pick.objects\
                 .filter(fixture__week=get_week(),
                         fixture__changeable=1,
-                        fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=5))\
+                        fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4))\
                 .order_by('fixture__ko_datetime')
 
         q = self.request.GET.get("week")
