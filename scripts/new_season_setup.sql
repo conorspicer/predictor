@@ -1,4 +1,4 @@
--- Make all fixtures no longer changable, so they do not appear in django views
+-- Make all fixtures no longer changeable, so they do not appear in django views
 UPDATE fixtures_fixture
 SET changeable = 0
 WHERE ko_datetime < current_date() AND id is not NULL;
