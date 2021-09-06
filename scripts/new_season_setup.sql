@@ -12,15 +12,16 @@ SET
  afc_west_id=NULL,
  afc_wild1_id=NULL,
  afc_wild2_id=NULL,
+ afc_wild3_id=NULL,
  nfc_east_id=NULL,
  nfc_north_id=NULL,
  nfc_south_id=NULL,
  nfc_west_id=NULL,
  nfc_wild1_id=NULL,
  nfc_wild2_id=NULL,
+ nfc_wild3_id=NULL,
  sb_runner_up_id=NULL,
  sb_winner_id=NULL;
-
 
 -- Write new fixtures to DB
 INSERT INTO fixtures_fixture(name,week,ko_datetime,changeable,away_team_id,home_team_id,away_score,home_score)
