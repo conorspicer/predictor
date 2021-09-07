@@ -298,3 +298,9 @@ VALUES
 (2021270,18,"2022/01/09 21:25",1,65,53,0,0),
 (2021271,18,"2022/01/09 21:25",1,52,46,0,0),
 (2021272,18,"2022/01/09 21:25",1,64,37,0,0) ;
+
+
+
+-- create new pick objects
+-- python manage.py shell
+-- run scripts/creation/add_picks.py
