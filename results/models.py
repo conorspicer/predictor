@@ -35,6 +35,8 @@ class UserWeekResult(models.Model):
             counter = 450
         elif self.user.username == 'lewismead':
             counter = 500
+        else:
+            counter = 0
         return counter
     user_points = property(_user_points)
 
