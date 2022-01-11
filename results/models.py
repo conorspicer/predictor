@@ -28,13 +28,13 @@ class UserWeekResult(models.Model):
 
         # Add manual adjustment for playoff scores
         elif self.user.username == 'conorspicer':
-            counter = 0
+            counter = 450
         elif self.user.username == 'torinmehmet':
-            counter = 0
+            counter = 450
         elif self.user.username == 'magnusmartinsen':
-            counter = 0
+            counter = 450
         elif self.user.username == 'lewismead':
-            counter = 0
+            counter = 500
         return counter
     user_points = property(_user_points)
 
