@@ -26,5 +26,4 @@ def get_week(check_date=datetime.now(), init_date=datetime(2021, 9, 15, 5)):
     return min(potential_weeks)
 
 
-if __name__ == '__main__':
-    print(get_week())
+print(get_week())
