@@ -30,11 +30,11 @@ class UserWeekResult(models.Model):
         elif self.user.username == 'conorspicer':
             counter = 450
         elif self.user.username == 'torinmehmet':
-            counter = 450 + 50
+            counter = 450 + 75
         elif self.user.username == 'magnusmartinsen':
             counter = 450
         elif self.user.username == 'lewismead':
-            counter = 500 +50
+            counter = 500 + 75
         else:
             counter = 0
         return counter
