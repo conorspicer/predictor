@@ -13,7 +13,7 @@ def get_week(check_date=datetime.now(), init_date=datetime(2021, 9, 15, 5)):
     potential_weeks = []
 
     # generate regular season & playoff weeks as tuples: (week, date)
-    for ii in range(0, 20):
+    for ii in range(0, 22):
         date_list.append((ii+1, init_date + a_week * ii))
     # include Superbowl week
     date_list.append((22, init_date + a_week * 22))
