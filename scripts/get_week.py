@@ -22,6 +22,7 @@ def get_week(check_date=datetime.now(), init_date=datetime(2021, 9, 15, 5)):
     for week_date in date_list:
         if check_date < week_date[1]:
             potential_weeks.append(week_date[0])
+    potential_weeks.append(22)
 
     return min(potential_weeks)
 
