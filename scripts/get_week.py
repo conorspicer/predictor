@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 
-def get_week(check_date=datetime.now(), init_date=datetime(2021, 9, 15, 5)):
+def get_week(check_date=datetime.now(), init_date=datetime(2022, 9, 14, 5)):
     """
     Returns the week of the season
     :param check_date:
