@@ -9,9 +9,9 @@
   <meta name="description" content="">
   <title>NFL Predictor</title>
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;subset=latin">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+{#  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;subset=latin">#}
+{#  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">#}
+{#  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">#}
   <link rel="stylesheet" href="{% static 'bootstrap-material-design-font/css/material.css' %}">
   <link rel="stylesheet" href="{% static 'web/assets/mobirise-icons/mobirise-icons.css' %}">
   <!-- <link rel="stylesheet" href="{% static 'tether/tether.min.css' %}"> -->
@@ -84,7 +84,7 @@
 <footer class="mbr-small-footer mbr-section mbr-section-nopadding" id="footer1-2" style="background-color: rgb(50, 50, 50); padding-top: 1.75rem; padding-bottom: 1.75rem;">
 
     <div class="container">
-        <p class="text-xs-center">Copyright (c) 2021 Conor Spicer.</p>
+        <p class="text-xs-center">Copyright (c) 2022 Conor Spicer.</p>
     </div>
 </footer>
 
@@ -92,20 +92,20 @@
   {% block footer %}
 
   {% endblock %}
+{##}
+{#  {% if GOOGLE_ANALYTICS_PROPERTY_ID %}#}
+{#    {% include "templates/google_analytics.html" %}#}
+{#  {% endif %}#}
 
-  {% if GOOGLE_ANALYTICS_PROPERTY_ID %}
-    {% include "templates/google_analytics.html" %}
-  {% endif %}
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-103968562-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-103968562-1');
-  </script>
+{#  <!-- Global site tag (gtag.js) - Google Analytics -->#}
+{#  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-103968562-1"></script>#}
+{#  <script>#}
+{#    window.dataLayer = window.dataLayer || [];#}
+{#    function gtag(){dataLayer.push(arguments);}#}
+{#    gtag('js', new Date());#}
+{##}
+{#    gtag('config', 'UA-103968562-1');#}
+{#  </script>#}
 
   <script src="{% static 'web/assets/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'tether/tether.min.js' %}"></script>
