@@ -9,7 +9,7 @@ User = get_user_model()
 
 class ResultsPage(ListView):
     context_object_name = 'results_list'
-    template_name = 'results/templates/results/userweekresult_list.html'
+    template_name = 'results/userweekresult_list.html'
 
     def get_queryset(self):
         qs = User.objects.all()
