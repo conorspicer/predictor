@@ -1,6 +1,6 @@
-from fixtures.models import Fixture
+from predictor.apps.fixtures.models import Fixture
 from predictor.apps.picks.models import Pick
-from predictor.apps.results import UserWeekResult, UserTotalResult
+from predictor.apps.results.models import UserWeekResult, UserTotalResult
 
 weeks = list(Fixture.objects.order_by().values_list('week', flat=True).distinct())
 

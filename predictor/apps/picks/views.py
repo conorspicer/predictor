@@ -173,4 +173,4 @@ def update_picks(request):
                 fixture__week=get_week()).order_by('fixture__ko_datetime')
         )
 
-    return render(request, 'picks/templates/picks/pick_form.html', {'formset': formset})
+    return render(request, 'picks/pick_form.html', {'formset': formset})
