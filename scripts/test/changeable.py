@@ -8,7 +8,7 @@
 
 from datetime import datetime, timezone, timedelta
 from scripts.get_week import get_week
-from picks.models import Pick
+from predictor.apps.picks.models import Pick
 
  - timedelta(hours=3)
 

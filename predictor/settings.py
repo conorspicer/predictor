@@ -18,10 +18,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # DEBUG = True
 DEBUG = False
 
-# Google Analytics
-GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-103968562-1'
-GOOGLE_ANALYTICS_DOMAIN = 'nflpredictor.pythonanywhere.com'
-
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
@@ -40,12 +36,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'bootstrap3',
-    'django_celery_beat',
-    'accounts',
-    'fixtures',
-    'picks',
-    'results',
-    'playoff_teams',
+    'predictor.apps.accounts',
+    'predictor.apps.fixtures',
+    'predictor.apps.picks',
+    'predictor.apps.results',
+    'predictor.apps.playoff_teams',
 ]
 
 MIDDLEWARE = [
@@ -72,7 +67,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
-                'predictor.context_processors.google_analytics',
+                # 'predictor.context_processors.google_analytics',
             ],
         },
     },
@@ -85,7 +80,7 @@ WSGI_APPLICATION = 'predictor.wsgi.application'
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 
-
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -139,8 +134,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/

@@ -1,4 +1,4 @@
-from picks.models import Pick
+from predictor.apps.picks.models import Pick
 from fixtures.models import Fixture, Team
 
 for p in Pick.objects.all():

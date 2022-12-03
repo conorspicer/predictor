@@ -1,5 +1,5 @@
 import pandas as pd
-from picks.models import Pick
+from predictor.apps.picks.models import Pick
 from fixtures.models import Fixture
 from django_pandas.io import read_frame
 
