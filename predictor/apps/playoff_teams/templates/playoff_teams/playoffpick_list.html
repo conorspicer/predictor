@@ -1,0 +1,102 @@
+{% extends 'picks/../../../picks/templates/picks/pick_base.html' %}
+{% load static %}
+{% block picks_content %}
+
+  <div class="container">
+    <a class="btn btn-success" style="width:200px;" href="{% url 'playoff_teams:update' %}">UPDATE</a>
+    {% for pick in object_list %}
+      <h5>PLAYOFF TEAMS AS PICKED BY <strong>@{{pick.user.username}}</strong></h5>
+
+    <table class="table table-striped">
+      <thead>
+        <th><img src="{% static 'images/AFC.png' %}" style="width:40px;height:40px;"> AFC</th>
+        <th>TEAM</th>
+        <th></th>
+        <th></th>
+        <th><img src="{% static 'images/NFC.png' %}" style="width:40px;height:40px;"> NFC</th>
+        <th>TEAM</th>
+      </thead>
+      <tbody>
+
+        <tr>
+          <td>AFC NORTH</td>
+          <td><img src="{% static pick.afc_north.team_logo %}" alt="No team chosen" style="width:40px;height:40px;">    {{pick.afc_north.team_name}}</td>
+          <td>  </td>
+          <td>  </td>
+          <td>NFC NORTH</td>
+          <td><img src="{% static pick.nfc_north.team_logo %}" alt="No team chosen" style="width:40px;height:40px;">    {{pick.nfc_north.team_name}}</td>
+        </tr>
+
+        <tr>
+          <td>AFC EAST</td>
+          <td><img src="{% static pick.afc_east.team_logo %}" alt="No team chosen" style="width:40px;height:40px;">    {{pick.afc_east.team_name}}</td>
+          <td></td>
+          <td></td>
+          <td>NFC EAST</td>
+          <td><img src="{% static pick.nfc_east.team_logo %}" alt="No team chosen" style="width:40px;height:40px;">    {{pick.nfc_east.team_name}}</td>
+        </tr>
+
+        <tr>
+          <td>AFC SOUTH</td>
+          <td><img src="{% static pick.afc_south.team_logo %}" alt="No team chosen" style="width:40px;height:40px;">    {{pick.afc_south.team_name}}</td>
+          <td></td>
+          <td></td>
+          <td>NFC SOUTH</td>
+          <td><img src="{% static pick.nfc_south.team_logo %}" alt="No team chosen" style="width:40px;height:40px;">    {{pick.nfc_south.team_name}}</td>
+        </tr>
+
+        <tr>
+          <td>AFC WEST</td>
+          <td><img src="{% static pick.afc_west.team_logo %}" alt="No team chosen" style="width:40px;height:40px;">    {{pick.afc_west.team_name}}</td>
+          <td></td>
+          <td></td>
+          <td>NFC WEST</td>
+          <td><img src="{% static pick.nfc_west.team_logo %}" alt="No team chosen" style="width:40px;height:40px;">    {{pick.nfc_west.team_name}}</td>
+        </tr>
+
+        <tr>
+          <td>AFC WILDCARD 1</td>
+          <td><img src="{% static pick.afc_wild1.team_logo %}" alt="No team chosen" style="width:40px;height:40px;">    {{pick.afc_wild1.team_name}}</td>
+          <td></td>
+          <td></td>
+          <td>NFC WILDCARD 1</td>
+          <td><img src="{% static pick.nfc_wild1.team_logo %}" alt="No team chosen" style="width:40px;height:40px;">    {{pick.nfc_wild1.team_name}}</td>
+        </tr>
+
+        <tr>
+          <td>AFC WILDCARD 2</td>
+          <td><img src="{% static pick.afc_wild2.team_logo %}" alt="No team chosen" style="width:40px;height:40px;">    {{pick.afc_wild2.team_name}}</td>
+          <td></td>
+          <td></td>
+          <td>NFC WILDCARD 2</td>
+          <td><img src="{% static pick.nfc_wild2.team_logo %}" alt="No team chosen" style="width:40px;height:40px;">    {{pick.nfc_wild2.team_name}}</td>
+        </tr>
+
+        <tr>
+          <td>AFC WILDCARD 3</td>
+          <td><img src="{% static pick.afc_wild3.team_logo %}" alt="No team chosen" style="width:40px;height:40px;">    {{pick.afc_wild3.team_name}}</td>
+          <td></td>
+          <td></td>
+          <td>NFC WILDCARD 3</td>
+          <td><img src="{% static pick.nfc_wild3.team_logo %}" alt="No team chosen" style="width:40px;height:40px;">    {{pick.nfc_wild3.team_name}}</td>
+        </tr>
+
+
+        <tr>
+          <td>SB RUNNER UP</td>
+          <td><img src="{% static pick.sb_runner_up.team_logo %}" alt="No team chosen" style="width:40px;height:40px;">    {{pick.sb_runner_up.team_name}}</td>
+          <td>  </td>
+          <td>  </td>
+          <td>SB WINNER</td>
+          <td><img src="{% static pick.sb_winner.team_logo %}" alt="No team chosen" style="width:40px;height:40px;">    {{pick.sb_winner.team_name}}</td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <hr>
+
+    {% endfor %}
+
+  </div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "fixtures/fixture_base.html" %}
+{% load static %}
+{% block prefixtures %}
+
+<form class="form-inline" method="GET">
+  <label for="week">SELECT WEEK :  </label>
+  <select name="week">
+    {% for ii in "xxxxxxxxxxxxxxxxxxxxxx" %}
+      {% if forloop.counter == input|add:"0" %}
+        <option selected="selected">{{ forloop.counter }}</option>
+      {% else %}
+          <option>{{ forloop.counter }}</option>
+      {% endif %}
+    {% endfor %}
+
+  </select>
+ <input type="submit" value="Submit" />
+</form>
+
+
+<div class="col-lg-12">
+<table class="table table-striped">
+	<thead>
+    <th>Week </th>
+		<th>Away </th>
+    <th>Score</th>
+		<th>Home </th>
+		<th>Kick Off</th>
+	</thead>
+
+  {% for fixture in object_list %}
+  	<tr>
+      <td>{{ fixture.week }}</td>
+  		<td><img src="{% static fixture.away_team.team_logo %}" style="width:40px;height:40px;">
+  			  {{ fixture.away_team }}</td>
+  		<td>{{ fixture.away_score }}      -     {{ fixture.home_score }}</td>
+  		<td><img src="{% static fixture.home_team.team_logo %}" style="width:40px;height:40px;">
+  			  {{ fixture.home_team }}</td>
+
+  		<td>{{ fixture.ko_datetime }}</td>
+
+  	</tr>
+  {% endfor %}
+
+</table>
+</div>
+<hr>
+<br>
+<br>
+
+{% endblock %}

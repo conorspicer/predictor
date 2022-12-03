@@ -1,0 +1,83 @@
+{% extends "picks/pick_base.html" %}
+{% load static %}
+{% block prepicks %}
+
+
+<P>ALL PICKS</P>
+<form class="form-inline" method="GET">
+    <label for="week">SELECT WEEK : </label>
+
+    <select name="week">
+        {% for ii in "xxxxxxxxxxxxxxxxxxxxxx" %}
+            {% if forloop.counter == input|add:"0" %}
+                <option selected="selected">{{ forloop.counter }}</option>
+            {% else %}
+                <option>{{ forloop.counter }}</option>
+            {% endif %}
+        {% endfor %}
+
+        {% if input == "All" %}
+            <option selected="selected">All</option>
+        {% else %}
+            <option>All</option>
+        {% endif %}
+    </select>
+    <input type="submit" value="Submit"/>
+</form>
+
+<table class="table">
+  <colgroup>
+   <col span="1" style="width: 5%;">
+   <col span="1" style="width: 22%;">
+   <col span="1" style="width: 5%;">
+   <col span="1" style="width: 17%;">
+   <col span="1" style="width: 17%;">
+   <col span="1" style="width: 17%;">
+   <col span="1" style="width: 17%;">
+
+<thead>
+  <th>Week</th>
+  <th>Away @ Home </th>
+  <th><hr width="1" size="500"></th>
+  <th>conorspicer</th>
+  <th>torinmehmet</th>
+  <th>magnusmartinsen</th>
+  <th>lewismead</th>
+</thead>
+
+<tbody>
+
+  {% for pick in object_list %}
+
+    {% if forloop.counter0|divisibleby:4 %}
+      <tr>
+        <td>{{pick.fixture.week}}</td>
+        <td align="center"><img src="{% static pick.fixture.away_team.team_logo %}" style="width:40px;height:40px;">
+          @
+          <img src="{% static pick.fixture.home_team.team_logo %}" style="width:40px;height:40px;"></td>
+        <td>|</td>
+        <td><img src="{% static pick.predicted_winner.team_logo %}" style="width:40px;height:40px;">
+          <strong>{{pick.predicted_margin}}</strong>,
+          <strong>{{pick.predicted_total_pts}}</strong>
+          {% if pick.lock %} <img src="{% static 'images/lock.png' %}" style="width:40px;height:40px;"> {% else %}{% endif %}
+        </td>
+    {% elif forloop.counter|divisibleby:4 %}
+      <td><img src="{% static pick.predicted_winner.team_logo %}" style="width:40px;height:40px;">
+        <strong>{{pick.predicted_margin}}</strong>,
+        <strong>{{pick.predicted_total_pts}}</strong>
+        {% if pick.lock %} <img src="{% static 'images/lock.png' %}" style="width:40px;height:40px;"> {% else %}{% endif %}
+      </td>
+    </tr>
+    {% else %}
+      <td><img src="{% static pick.predicted_winner.team_logo %}" style="width:40px;height:40px;">
+        <strong>{{pick.predicted_margin}}</strong>,
+        <strong>{{pick.predicted_total_pts}}</strong>
+        {% if pick.lock %} <img src="{% static 'images/lock.png' %}" style="width:40px;height:40px;"> {% else %}{% endif %}
+      </td>
+    {% endif %}
+
+  {% endfor %}
+</tbody>
+</table>
+
+{% endblock %}

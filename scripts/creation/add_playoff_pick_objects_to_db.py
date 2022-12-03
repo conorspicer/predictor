@@ -11,8 +11,8 @@ import django
 django.setup()
 
 from django.contrib.auth.models import User
-from fixtures.models import Fixture
-from picks.models import Pick
+from predictor.apps.fixtures.models import Fixture
+from predictor.apps.picks.models import Pick
 from scripts.get_week import get_week
 from datetime import datetime, timedelta, timezone
 
