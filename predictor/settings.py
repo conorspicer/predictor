@@ -13,7 +13,8 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 AUTH_PROFILE_MODULE = 'accounts.User'
 CRISPY_TEMPLATE_PACK = 'bootstrap'
 SECRET_KEY = os.environ.get('SECRET_KEY')
-DEBUG = True
+
+
 
 
 ALLOWED_HOSTS = [
@@ -79,6 +80,7 @@ WSGI_APPLICATION = 'predictor.wsgi.application'
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 if socket.gethostname() == 'cspicer-mb-K6VPQ':
+    DEBUG = True
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -86,6 +88,7 @@ if socket.gethostname() == 'cspicer-mb-K6VPQ':
         }
     }
 else:
+    DEBUG = False
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
