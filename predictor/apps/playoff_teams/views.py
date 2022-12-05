@@ -13,7 +13,7 @@ class PlayoffPickList(LoginRequiredMixin, generic.ListView):
 
 class PlayoffPickListAll(LoginRequiredMixin, generic.ListView):
     model = PlayoffPick
-    template_name = 'playoff_teams/templates/playoff_teams/playoffpick_list.html'
+    template_name = 'playoff_teams/playoffpick_list.html'
 
     def get_queryset(self):
         return PlayoffPick.objects.all()

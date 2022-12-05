@@ -51,7 +51,7 @@ class ListSpecificWeekPicks(LoginRequiredMixin, generic.ListView):
 # All Users' picks less than 1hr to KO, in play or completed
 class ListSubmittedWeekPicks(LoginRequiredMixin, generic.ListView):
     model = Pick
-    template_name = 'picks/templates/picks/pick_submitted.html'
+    template_name = 'picks/pick_submitted.html'
 
     def get_context_data(self, **kwargs):
         context = super(ListSubmittedWeekPicks, self).get_context_data(**kwargs)
@@ -89,7 +89,7 @@ class ListSubmittedWeekPicks(LoginRequiredMixin, generic.ListView):
 # All Users' picks
 class ListAllWeekPicks(LoginRequiredMixin, generic.ListView):
     model = Pick
-    template_name = 'picks/templates/picks/pick_check.html'
+    template_name = 'picks/pick_check.html'
 
     def get_context_data(self, **kwargs):
         context = super(ListAllWeekPicks, self).get_context_data(**kwargs)
@@ -124,7 +124,7 @@ class ListAllWeekPicks(LoginRequiredMixin, generic.ListView):
 # List all picks
 class ListSimpleWeekPicks(LoginRequiredMixin, generic.ListView):
     model = Pick
-    template_name = 'picks/templates/picks/pick_simple.html'
+    template_name = 'picks/pick_simple.html'
 
     def get_queryset(self):
         if self.request.GET.get("week"):

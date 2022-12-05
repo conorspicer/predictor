@@ -47,4 +47,4 @@ def update_fixtures(request):
             queryset=Fixture.objects.filter(week=get_week(), changeable=1).order_by('ko_datetime')
         )
 
-    return render(request, 'fixtures/templates/fixtures/fixture_form.html', {'formset': formset})
+    return render(request, 'fixtures/fixture_form.html', {'formset': formset})

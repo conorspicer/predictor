@@ -13,7 +13,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 AUTH_PROFILE_MODULE = 'accounts.User'
 CRISPY_TEMPLATE_PACK = 'bootstrap'
 SECRET_KEY = os.environ.get('SECRET_KEY')
-DEBUG = False
+DEBUG = True
 
 
 ALLOWED_HOSTS = [
