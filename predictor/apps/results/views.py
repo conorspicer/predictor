@@ -1,7 +1,7 @@
 from datetime import datetime, timezone, timedelta
 from django.views.generic import ListView
 from predictor.apps.picks.models import Pick
-from .models import UserWeekResult, UserTotalResult
+from .models import UserWeekResult, UserTotalResult, UserScores
 from scripts.get_week import get_week
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -41,28 +41,28 @@ class ResultsPage(ListView):
 
         # If all selected, don't filter, just order
         if self.request.GET.get("week") == 'All':
-            context['valid_picks'] = Pick.objects\
+            context['valid_picks'] = UserScores.objects\
                 .filter(
-                    fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4),
-                    fixture__changeable=1
+                    ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4),
+                    changeable=1
                 )\
                 .order_by('fixture__ko_datetime')
 
         # if a week is defined, filter on that
         elif self.request.GET.get("week"):
             selection = self.request.GET.get("week")
-            context['valid_picks'] = Pick.objects\
-                .filter(fixture__week=selection,
-                        fixture__changeable=1,
-                        fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4))\
+            context['valid_picks'] = UserScores.objects\
+                .filter(week=selection,
+                        changeable=1,
+                        ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4))\
                 .order_by('fixture__ko_datetime')
 
         # otherwise filter to current week
         else:
-            context['valid_picks'] = Pick.objects\
-                .filter(fixture__week=get_week(),
-                        fixture__changeable=1,
-                        fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4))\
+            context['valid_picks'] = UserScores.objects\
+                .filter(week=get_week(),
+                        changeable=1,
+                        ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4))\
                 .order_by('fixture__ko_datetime')
 
         q = self.request.GET.get("week")

@@ -24,7 +24,7 @@
 <table style="font-size:20px" class="table">
   <thead>
     <th>User</th>
-    {% for ii in "xxxxxxxxxxxxxxxxxxxxxx" %}
+    {% for ii in "xxxxxxxxxxxxxxxxxxxxxxx" %}
       <th>{{forloop.counter}}</th>
     {% endfor %}
   </thead>
@@ -135,20 +135,20 @@
         <td>
           <strong >{{pick.winner_pts}}</strong>,
           <strong>{{pick.margin_pts}}</strong>,
-          <strong>{{pick.totalpts_pts}}</strong>
+          <strong>{{pick.total_score_pts}}</strong>
         </td>
     {% elif forloop.counter|divisibleby:4 %}
     <td>
       <strong >{{pick.winner_pts}}</strong>,
       <strong>{{pick.margin_pts}}</strong>,
-      <strong>{{pick.totalpts_pts}}</strong>
+      <strong>{{pick.total_score_pts}}</strong>
     </td>
     </tr>
     {% else %}
     <td>
       <strong >{{pick.winner_pts}}</strong>,
       <strong>{{pick.margin_pts}}</strong>,
-      <strong>{{pick.totalpts_pts}}</strong>
+      <strong>{{pick.total_score_pts}}</strong>
     </td>
     {% endif %}
 
