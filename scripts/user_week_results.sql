@@ -1,20 +1,22 @@
-create or replace view user_week_results as 
-(select id as user, all_user_weeks.week, COALESCE(user_points, 0) as user_points
+-- create or replace view user_week_results as (
+
+select 
+	a.user_id as user, 
+    a.week, 
+    CASE
+		WHEN a.week=23 and a.user_id=11 THEN 0   -- conorspicer
+        WHEN a.week=23 and a.user_id=12 THEN 0   -- torinmehmet
+        WHEN a.week=23 and a.user_id=13 THEN 0   -- magnusmartinsen
+        WHEN a.week=23 and a.user_id=14 THEN 0   -- lewismead
+        ELSE COALESCE(user_points, 0) 
+	END as user_points
 from 
-(select * from 
-	(select distinct id from auth_user) users 
-	cross join 
-	(select distinct `week` from fixtures_fixture) weeks
-) all_user_weeks
+results_userweekresult a
 left join (
 	select user, week, sum(user_points) as user_points
 	from user_scores
 	where changeable = 1
 	group by user, week
-) a on all_user_weeks.id=a.user and all_user_weeks.week=a.week
-UNION ALL (VALUES 
-	ROW(11, 23, 0 ),
-	ROW(12, 23, 0),
-	ROW(13, 23, 0),
-    ROW(14, 23, 0)
-));
+) b on a.user_id=b.user and a.week=b.week
+
+-- );
