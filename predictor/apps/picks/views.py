@@ -8,7 +8,7 @@ from scripts.get_week import get_week
 from datetime import datetime, timezone, timedelta
 
 
-# All weeks' picks for logged in user
+# All weeks' picks for logged-in user
 class ListSpecificWeekPicks(LoginRequiredMixin, generic.ListView):
     model = Pick
 
@@ -140,7 +140,7 @@ class ListSimpleWeekPicks(LoginRequiredMixin, generic.ListView):
         return queryset
 
 
-# Picks for logged in user, for current week, with >1hr to KO
+# Picks for logged-in user, for current week, with >1hr to KO
 @login_required
 def update_picks(request):
     if request.method == 'POST':

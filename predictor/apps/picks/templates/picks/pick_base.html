@@ -11,8 +11,8 @@
     <a class="btn btn-primary" style="width:200px;" href="{% url 'picks:all' %}">MY PICKS</a>
     <a class="btn btn-info" style="width:200px;" href="{% url 'picks:update' %}">UPDATE PICKS</a>
     <a class="btn btn-success" style="width:200px;" align="center" href="{% url 'picks:public' %}">EVERYONE'S PICKS</a>
-    <a class="btn btn-danger" style="width:200px;" align="center" href="{% url 'playoff_teams:all' %}">PLAYOFF PICKS</a>
-{#    <a class="btn btn-danger" style="width:200px;" align="center" href="{% url 'playoff_teams:public' %}">ALL PLAYOFF PICKS</a>#}
+{#    <a class="btn btn-danger" style="width:200px;" align="center" href="{% url 'playoff_teams:all' %}">PLAYOFF PICKS</a>#}
+    <a class="btn btn-danger" style="width:200px;" align="center" href="{% url 'playoff_teams:public' %}">ALL PLAYOFF PICKS</a>
 <hr>
     {% block prepicks %}{% endblock %}
     {% block picks_content %}{% endblock %}
