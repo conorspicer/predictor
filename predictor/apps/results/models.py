@@ -1,54 +1,56 @@
 from django.db import models
-from predictor.apps.picks.models import Pick
+from predictor.apps.picks.models import Pick, Fixture
 from datetime import datetime, timedelta, timezone
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-class UserWeekResult(models.Model):
-    user = models.ForeignKey(User, related_name='player_week', on_delete=models.CASCADE)
+class UserScores(models.Model):
+    pick_id = models.ForeignKey(Pick, on_delete=models.DO_NOTHING, db_column='pick_id')
+    ko_datetime = models.DateTimeField(primary_key=True)
+    home_pick = models.CharField(max_length=50)
+    away_pick = models.CharField(max_length=50)
+    locked = models.BooleanField(default=False)
+    fixture = models.ForeignKey(Fixture, on_delete=models.DO_NOTHING, db_column='fixture_id')
+    away_score = models.PositiveIntegerField(null=True, blank=True)
+    home_score = models.PositiveIntegerField(null=True, blank=True)
     week = models.PositiveIntegerField(null=True, blank=True)
+    changeable = models.BooleanField(default=True)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, db_column='user')
+    away_team_name = models.CharField(max_length=50)
+    home_team_name = models.CharField(max_length=50)
+    user_margin = models.PositiveIntegerField(null=True, blank=True)
+    user_total_score = models.PositiveIntegerField(null=True, blank=True)
+    user_winner = models.CharField(max_length=50)
+    actual_margin = models.PositiveIntegerField(null=True, blank=True)
+    actual_total_score = models.PositiveIntegerField(null=True, blank=True)
+    actual_winner = models.CharField(max_length=50)
+    winner_pts = models.PositiveIntegerField(null=True, blank=True)
+    margin_pts = models.PositiveIntegerField(null=True, blank=True)
+    total_score_pts = models.PositiveIntegerField(null=True, blank=True)
+    user_points = models.PositiveIntegerField(null=True, blank=True)
 
-    def _user_points(self):
-        # counter = 0
-        # for p in Pick.objects.filter(user=self.user, fixture__week=self.week):
-        #     counter += p.points_scored
+    class Meta:
+        managed = False
+        # scores by user by game, for current season
+        db_table = 'user_scores'
 
-        if self.week < 22:
-            counter = 0
-            for p in Pick.objects.filter(
-                    user=self.user,
-                    fixture__week=self.week,
-                    fixture__ko_datetime__gt=datetime.now(timezone.utc) - timedelta(weeks=52),
-                    fixture__changeable=1):
-                counter += p.points_scored
 
-        # Add manual adjustment for playoff scores
-        elif self.user.username == 'conorspicer':
-            counter = 0
-        elif self.user.username == 'torinmehmet':
-            counter = 0
-        elif self.user.username == 'magnusmartinsen':
-            counter = 0
-        elif self.user.username == 'lewismead':
-            counter = 0
-        else:
-            counter = 0
-        return counter
-    user_points = property(_user_points)
+class UserWeekResult(models.Model):
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, db_column='user')
+    week = models.PositiveIntegerField(primary_key=True)
+    user_points = models.PositiveIntegerField(null=True, blank=True,)
 
-    def __str__(self):
-        return ' '.join([
-            self.user.username,
-            " - ",
-            "Week",
-            str(self.week),
-        ])
+    class Meta:
+        managed = False
+        # scores by user by week, for current season, with time aware scoring
+        db_table = 'user_week_results'
 
 
 class UserTotalResult(models.Model):
-    user = models.ForeignKey(User, related_name='player_total', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    id = models.IntegerField(primary_key=True)
 
     def _total_points_scored(self):
         counter = 0
@@ -57,5 +59,3 @@ class UserTotalResult(models.Model):
         return counter
     total_points_scored = property(_total_points_scored)
 
-    def __str__(self):
-        return self.user.username
