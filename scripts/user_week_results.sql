@@ -1,5 +1,5 @@
--- create or replace view user_week_results as (
 
+create or replace view user_week_results as (
 select 
 	a.user_id as user, 
     a.week, 
@@ -18,5 +18,4 @@ left join (
 	where changeable = 1
 	group by user, week
 ) b on a.user_id=b.user and a.week=b.week
-
--- );
+);

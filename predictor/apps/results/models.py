@@ -12,7 +12,7 @@ class UserScores(models.Model):
     home_pick = models.CharField(max_length=50)
     away_pick = models.CharField(max_length=50)
     locked = models.BooleanField(default=False)
-    fixture = models.ForeignKey(Fixture, on_delete=models.CASCADE, db_column='fixture_id')
+    fixture = models.ForeignKey(Fixture, on_delete=models.DO_NOTHING, db_column='fixture_id')
     away_score = models.PositiveIntegerField(null=True, blank=True)
     home_score = models.PositiveIntegerField(null=True, blank=True)
     week = models.PositiveIntegerField(null=True, blank=True)
