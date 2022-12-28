@@ -39,6 +39,8 @@ class ResultsPage(ListView):
             .filter(user__username='lewismead')\
             .order_by('week')
 
+        # TODO - create per user contexts
+
         # If all selected, don't filter, just order
         if self.request.GET.get("week") == 'All':
             context['valid_picks'] = UserScores.objects\

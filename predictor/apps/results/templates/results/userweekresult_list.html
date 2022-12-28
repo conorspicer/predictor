@@ -58,6 +58,9 @@
       {% endfor %}
     </tr>
 
+    {# TODO - add new username(s) #}
+
+
   </tbody>
 </table>
 
@@ -119,12 +122,13 @@
   <th>torinmehmet</th>
   <th>magnusmartinsen</th>
   <th>lewismead</th>
+  {# TODO - add new username(s) #}
 </thead>
 
 <tbody style="font-size:25px">
 
   {% for pick in valid_picks %}
-
+    {# TODO - increment counter? #}
     {% if forloop.counter0|divisibleby:4 %}
       <tr>
         <td>{{pick.fixture.week}}</td>
