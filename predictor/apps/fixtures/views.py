@@ -34,7 +34,6 @@ def update_fixtures(request):
             queryset=Fixture.objects.filter(week=get_week(), changeable=1).order_by('ko_datetime')
         )
 
-        print(formset.errors)
         if formset.is_valid():
             for form in formset.forms:
                 if action == 'save':

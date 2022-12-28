@@ -1,0 +1,9 @@
+- Add user via admin console
+- Review "TODO" parts of code
+- Update "user_week_results.sql"
+- Add new rows to "results_userweekresult" table
+- Create Pick objects with: python manage.py shell < scripts/creation/add_picks.py
+- Assuming user_id == 15, run the following:
+    - INSERT INTO playoff_teams_playoffpick (id) VALUES (15);
+    - INSERT INTO results_userweekresult (user_id, week) VALUES (15, 1),  (15, 2),  (15, 3),  (15, 4),  (15, 5),  (15, 6),  (15, 7),  (15, 8),  (15, 9),  (15, 10),  (15, 11),  (15, 12),  (15, 13),  (15, 14),  (15, 15),  (15, 16),  (15, 17),  (15, 18),  (15, 19),  (15, 20),  (15, 21),  (15, 22),  (15, 23);
+    - INSERT INTO results_usertotalresult (id, user_id) VALUES (5, 15); -- N.B. manually increment id here?

@@ -7,8 +7,8 @@ python manage.py shell < scripts/creation/add_picks.py
 
 """
 import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "predictor.settings")
 import django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "predictor.settings")
 django.setup()
 
 from django.contrib.auth.models import User
@@ -18,6 +18,7 @@ from predictor.apps.picks.models import Pick
 
 # Initial setup for season
 for person in User.objects.all():
+    # if person.username == 'lukeconboy':
     for game in Fixture.objects.filter(changeable=1):
         new_entry = Pick(fixture=game, user=person)
         new_entry.save()

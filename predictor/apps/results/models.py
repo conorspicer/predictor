@@ -18,8 +18,11 @@ class UserScores(models.Model):
     week = models.PositiveIntegerField(null=True, blank=True)
     changeable = models.BooleanField(default=True)
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, db_column='user')
+    username = models.CharField(max_length=50)
     away_team_name = models.CharField(max_length=50)
+    away_team_logo = models.CharField(max_length=150)
     home_team_name = models.CharField(max_length=50)
+    home_team_logo = models.CharField(max_length=150)
     user_margin = models.PositiveIntegerField(null=True, blank=True)
     user_total_score = models.PositiveIntegerField(null=True, blank=True)
     user_winner = models.CharField(max_length=50)
@@ -39,6 +42,7 @@ class UserScores(models.Model):
 
 class UserWeekResult(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, db_column='user')
+    username = models.CharField(max_length=50)
     week = models.PositiveIntegerField(primary_key=True)
     user_points = models.PositiveIntegerField(null=True, blank=True,)
 
