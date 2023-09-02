@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 
-def get_week(check_date=datetime.now(), init_date=datetime(2022, 9, 14, 5)):
+def get_week(check_date=datetime.now(), init_date=datetime(2023, 9, 13, 5)):
     """
     Returns the week of the season
     :param check_date:
@@ -11,19 +11,16 @@ def get_week(check_date=datetime.now(), init_date=datetime(2022, 9, 14, 5)):
     a_week = timedelta(weeks=1)
     date_list = []
     potential_weeks = []
-
     # generate regular season & playoff weeks as tuples: (week, date)
     for ii in range(0, 22):
         date_list.append((ii+1, init_date + a_week * ii))
     # include Superbowl week
     date_list.append((22, init_date + a_week * 22))
-
     # find min of week, for dates in the future
     for week_date in date_list:
         if check_date < week_date[1]:
             potential_weeks.append(week_date[0])
     potential_weeks.append(22)
-
     return min(potential_weeks)
 
 

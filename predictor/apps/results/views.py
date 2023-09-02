@@ -23,46 +23,47 @@ class ResultsPage(ListView):
         context['totals'] = sorted(UserTotalResult.objects.all(),
                                    key=lambda x: x.total_points_scored, reverse=True)
 
-        context['conorspicer'] = UserWeekResult.objects\
-            .filter(user__username='conorspicer')\
+        context['conorspicer'] = UserWeekResult.objects \
+            .filter(user__username='conorspicer') \
             .order_by('week')
 
-        context['torinmehmet'] = UserWeekResult.objects\
-            .filter(user__username='torinmehmet')\
+        context['torinmehmet'] = UserWeekResult.objects \
+            .filter(user__username='torinmehmet') \
             .order_by('week')
 
-        context['magnusmartinsen'] = UserWeekResult.objects\
-            .filter(user__username='magnusmartinsen')\
+        context['magnusmartinsen'] = UserWeekResult.objects \
+            .filter(user__username='magnusmartinsen') \
             .order_by('week')
 
-        context['lewismead'] = UserWeekResult.objects\
-            .filter(user__username='lewismead')\
+        context['lewismead'] = UserWeekResult.objects \
+            .filter(user__username='lewismead') \
             .order_by('week')
 
         # If all selected, don't filter, just order
         if self.request.GET.get("week") == 'All':
-            context['valid_picks'] = UserScores.objects\
+            context['valid_picks'] = UserScores.objects \
                 .filter(
-                    ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4),
-                    changeable=1
-                )\
+                ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4),
+                changeable=1
+            ) \
                 .order_by('fixture__ko_datetime')
 
         # if a week is defined, filter on that
         elif self.request.GET.get("week"):
             selection = self.request.GET.get("week")
-            context['valid_picks'] = UserScores.objects\
+            context['valid_picks'] = UserScores.objects \
                 .filter(week=selection,
                         changeable=1,
-                        ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4))\
+                        ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4)) \
                 .order_by('fixture__ko_datetime')
 
         # otherwise filter to current week
         else:
-            context['valid_picks'] = UserScores.objects\
+
+            context['valid_picks'] = UserScores.objects \
                 .filter(week=get_week(),
                         changeable=1,
-                        ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4))\
+                        ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4)) \
                 .order_by('fixture__ko_datetime')
 
         q = self.request.GET.get("week")

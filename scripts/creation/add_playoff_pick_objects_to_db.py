@@ -29,3 +29,12 @@ for person in User.objects.all():
 
         )
         new_entry.save()
+
+""" 
+Equivalent SQL to select Fixture objects:
+
+select *
+from fixtures_fixture
+where week = 19
+  and ko_datetime > DATE_ADD(curdate(), INTERVAL -30 WEEK)
+"""
