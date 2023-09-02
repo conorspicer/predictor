@@ -3,8 +3,8 @@
 {% block picks_content %}
 
   <div class="container">
-{#    <a class="btn btn-success" style="width:200px;" href="{% url 'playoff_teams:update' %}">UPDATE</a>#}
-    <a class="btn btn-success" style="width:200px;" href="{% url 'playoff_teams:public' %}">All Picks</a>
+    <a class="btn btn-success" style="width:200px;" href="{% url 'playoff_teams:update' %}">UPDATE</a>
+    <!-- <a class="btn btn-success" style="width:200px;" href="{% url 'playoff_teams:public' %}">All Picks</a> -->
     {% for pick in object_list %}
       <h5>PLAYOFF TEAMS AS PICKED BY <strong>@{{pick.user.username}}</strong></h5>
 
