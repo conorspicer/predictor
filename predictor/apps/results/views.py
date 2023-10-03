@@ -46,7 +46,7 @@ class ResultsPage(ListView):
                 ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4),
                 changeable=1
             ) \
-                .order_by('fixture__ko_datetime')
+                .order_by('fixture__id', 'user__id')
 
         # if a week is defined, filter on that
         elif self.request.GET.get("week"):
@@ -55,7 +55,7 @@ class ResultsPage(ListView):
                 .filter(week=selection,
                         changeable=1,
                         ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4)) \
-                .order_by('fixture__ko_datetime')
+                .order_by('fixture__id', 'user__id')
 
         # otherwise filter to current week
         else:
@@ -64,7 +64,7 @@ class ResultsPage(ListView):
                 .filter(week=get_week(),
                         changeable=1,
                         ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4)) \
-                .order_by('fixture__ko_datetime')
+                .order_by('fixture__id', 'user__id')
 
         q = self.request.GET.get("week")
         context['input'] = q
