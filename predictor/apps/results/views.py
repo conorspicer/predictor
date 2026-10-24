@@ -4,6 +4,7 @@ from predictor.apps.picks.models import Pick
 from .models import UserWeekResult, UserTotalResult, UserScores
 from scripts.get_week import get_week
 from django.contrib.auth import get_user_model
+from predictor.weeks import selected_week
 User = get_user_model()
 
 
@@ -16,6 +17,7 @@ class ResultsPage(ListView):
         return qs
 
     def get_context_data(self, **kwargs):
+        week = selected_week(self.request)
         context = super(ResultsPage, self).get_context_data(**kwargs)
 
         context['current_week'] = get_week()
@@ -39,34 +41,16 @@ class ResultsPage(ListView):
             .filter(user__username='lewismead') \
             .order_by('week')
 
-        # If all selected, don't filter, just order
-        if self.request.GET.get("week") == 'All':
-            context['valid_picks'] = UserScores.objects \
-                .filter(
-                ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4),
-                changeable=1
-            ) \
-                .order_by('fixture__id', 'user__id')
+        valid_picks = UserScores.objects.filter(
+            ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4),
+            changeable=True,
+        )
+        if week != 'All':
+            valid_picks = valid_picks.filter(week=week)
+        context['valid_picks'] = valid_picks.select_related(
+            'fixture__away_team', 'fixture__home_team', 'user',
+        ).order_by('fixture_id', 'user_id')
 
-        # if a week is defined, filter on that
-        elif self.request.GET.get("week"):
-            selection = self.request.GET.get("week")
-            context['valid_picks'] = UserScores.objects \
-                .filter(week=selection,
-                        changeable=1,
-                        ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4)) \
-                .order_by('fixture__id', 'user__id')
-
-        # otherwise filter to current week
-        else:
-
-            context['valid_picks'] = UserScores.objects \
-                .filter(week=get_week(),
-                        changeable=1,
-                        ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4)) \
-                .order_by('fixture__id', 'user__id')
-
-        q = self.request.GET.get("week")
-        context['input'] = q
+        context['input'] = week
 
         return context

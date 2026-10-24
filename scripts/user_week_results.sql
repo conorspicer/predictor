@@ -1,6 +1,7 @@
 
 create or replace view user_week_results as (
 select 
+	a.id as id,
 	a.user_id as user, 
     a.week, 
     CASE

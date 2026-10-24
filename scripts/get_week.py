@@ -1,27 +1,41 @@
-from datetime import datetime, timedelta
+from datetime import datetime, time, timedelta, timezone as datetime_timezone
+
+from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
+from django.utils import timezone
 
 
-def get_week(check_date=datetime.now(), init_date=datetime(2024, 9, 11, 5)):
-    """
-    Returns the week of the season
-    :param check_date:
-    :param init_date: Should be set to the end (i.e. Weds morning) after week 1 ends
-    :return:
-    """
-    a_week = timedelta(weeks=1)
-    date_list = []
-    potential_weeks = []
-    # generate regular season & playoff weeks as tuples: (week, date)
-    for ii in range(0, 22):
-        date_list.append((ii+1, init_date + a_week * ii))
-    # include Superbowl week
-    date_list.append((22, init_date + a_week * 22))
-    # find min of week, for dates in the future
-    for week_date in date_list:
-        if check_date < week_date[1]:
-            potential_weeks.append(week_date[0])
-    potential_weeks.append(22)
-    return min(potential_weeks)
+def _as_utc(value):
+    if timezone.is_naive(value):
+        return value.replace(tzinfo=datetime_timezone.utc)
+    return value.astimezone(datetime_timezone.utc)
 
 
-print(get_week())
+def get_week(check_date=None, init_date=None):
+    """Count weeks from Wednesday 05:00 UTC after the active season's week 1."""
+    check_date = _as_utc(check_date if check_date is not None else timezone.now())
+    if init_date is None:
+        configured = getattr(settings, 'SEASON_WEEK_ONE_END', '')
+        if configured:
+            try:
+                init_date = datetime.fromisoformat(configured)
+            except ValueError as exc:
+                raise ImproperlyConfigured(
+                    'SEASON_WEEK_ONE_END must be an ISO 8601 datetime.'
+                ) from exc
+        else:
+            from predictor.apps.fixtures.models import Fixture
+
+            kickoff = (Fixture.objects.filter(changeable=True, week=1,
+                                              ko_datetime__isnull=False)
+                       .order_by('ko_datetime')
+                       .values_list('ko_datetime', flat=True).first())
+            if kickoff is None:
+                return 1
+            kickoff = _as_utc(kickoff)
+            day = kickoff.date() + timedelta(days=(2 - kickoff.weekday()) % 7)
+            init_date = datetime.combine(day, time(5), tzinfo=datetime_timezone.utc)
+            if init_date <= kickoff:
+                init_date += timedelta(weeks=1)
+    elapsed = check_date - _as_utc(init_date)
+    return max(1, min(22, elapsed.days // 7 + 2))

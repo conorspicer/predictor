@@ -3,11 +3,13 @@
 
 {% block picks_content %}
 <h5>Make picks or update them here</h5>
-<p>The only picks which will be shown are games for the current week which have not been played yet. Picks are locked approx. 1 hour before KO</p>
+<p>Games for the current week are shown until one hour before kickoff, when picks close.</p>
 
 
   <form method="POST" action="">
     {% csrf_token %}
+    {{ formset.non_form_errors }}
+    {{ formset.management_form.errors }}
 
     <table class="table table-striped">
       <thead>
@@ -20,18 +22,18 @@
 
     {% for form in formset %}
       <tr>
-        <td><strong>{{form.instance.fixture}} {{ form.fixture.as_hidden }}</strong></td>
+        <td><strong>{{ form.instance.fixture }}</strong>{{ form.non_field_errors }}{{ form.id.errors }}</td>
 
         <td>
           <img src="{% static form.instance.fixture.away_team.team_logo %}" style="width:40px;height:40px;">
-          {{form.away_pick}}
+          {{ form.away_pick.errors }}{{form.away_pick}}
         </td>
         <td> <strong>@</strong> </td>
         <td>
           <img src="{% static form.instance.fixture.home_team.team_logo %}" style="width:40px;height:40px;">
-          {{form.home_pick}}
+          {{ form.home_pick.errors }}{{form.home_pick}}
         </td>
-        <td> {{form.lock}} </td>
+        <td> {{ form.lock.errors }}{{form.lock}} </td>
         {% for hidden in form.hidden_fields %} {{ hidden }} {% endfor %}
       </tr>
     {% endfor %}

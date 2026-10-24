@@ -53,7 +53,7 @@
                         <li class="nav-item"><a class="nav-link link" href="{% url 'HOF' %}">HOF</a></li>
 
                         {% if user.is_authenticated %}
-                          <li class="nav-item nav-btn"><a class="nav-link btn btn-white btn-white-outline" href="{% url 'accounts:logout' %}">LOGOUT</a></li>
+                          <li class="nav-item nav-btn"><form method="post" action="{% url 'accounts:logout' %}">{% csrf_token %}<button type="submit" class="nav-link btn btn-white btn-white-outline">LOGOUT</button></form></li>
                         {% else %}
                               <li class="nav-item"><a href="{% url 'accounts:login' %}" class="nav-link btn btn-white btn-white-outline">LOGIN</a></li>
                         {% endif %}
@@ -91,15 +91,12 @@
 
 
   <script src="{% static 'web/assets/jquery/jquery.min.js' %}"></script>
-  <script src="{% static 'tether/tether.min.js' %}"></script>
-  <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
   <script src="{% static 'smooth-scroll/smooth-scroll.js' %}"></script>
-  <script src="{% static 'dropdown/js/script.min.js' %}"></script>
   <script src="{% static 'touch-swipe/jquery.touch-swipe.min.js' %}"></script>
   <script src="{% static 'viewport-checker/jquery.viewportchecker.js' %}"></script>
   <script src="{% static 'jarallax/jarallax.js' %}"></script>
-  <script src="{% static 'bootstrap-carousel-swipe/bootstrap-carousel-swipe.js' %}"></script>
   <script src="{% static 'social-likes/social-likes.js' %}"></script>
+  <script src="{% static 'theme/js/navigation.js' %}"></script>
   <script src="{% static 'theme/js/script.js' %}"></script>
 
 
