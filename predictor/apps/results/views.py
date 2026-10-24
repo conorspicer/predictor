@@ -1,4 +1,5 @@
-from datetime import datetime, timezone, timedelta
+from datetime import timedelta
+from django.utils import timezone
 from django.views.generic import ListView
 from predictor.apps.picks.models import Pick
 from .models import UserWeekResult, UserTotalResult, UserScores
@@ -42,7 +43,7 @@ class ResultsPage(ListView):
             .order_by('week')
 
         valid_picks = UserScores.objects.filter(
-            ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=4),
+            ko_datetime__lt=timezone.now() - timedelta(hours=4),
             changeable=True,
         )
         if week != 'All':

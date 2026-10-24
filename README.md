@@ -1,106 +1,87 @@
 # NFL Predictor
 
-Django app for weekly score predictions and a season leaderboard.
+A preserved NFL score-prediction game for four friends. This repository is offline;
+there is no live service or production database to migrate. The compatibility branch
+keeps the game runnable with synthetic data while repairing its security problems.
+[PROJECT.md](PROJECT.md) records the original idea, scoring rules and unfinished parts.
 
-## Requirements
+## Run the fictional demo
 
-Python 3.11–3.14. Production leaderboards use MySQL 8.0.11+ (or MariaDB 10.5+).
-The app uses Django 5.2 LTS; the older Django 4.1 release is unsupported.
-
-## Local preview and tests
+Requires Python 3.11–3.14. The demo uses SQLite and includes the leaderboard; no
+external account, historic database export or MySQL installation is needed.
 
 ```sh
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -r requirements-core.txt
-python manage.py test --settings=predictor.test_settings
 export DJANGO_DEBUG=true DATABASE_ENGINE=sqlite
+export SQLITE_DATABASE_PATH="$PWD/demo.sqlite3"
 python manage.py migrate
-python manage.py createsuperuser
+python manage.py seed_demo
 python manage.py runserver
 ```
 
-Tests always use a separate database. SQLite supports local login, fixtures and
-picks; the leaderboard requires the MySQL views described below. Create synthetic
-fixtures and picks in Django admin for a local preview. Do not restore the old
-public database exports. To retain local sessions across server restarts, set a
-private `DJANGO_SECRET_KEY`; the debug-only fallback is generated at startup.
+Open http://127.0.0.1:8000/ and sign in as `conorspicer` with
+`demo-only-predictor`. All four example players use that fictional demo password;
+only the first is an administrator. This is development data, not anyone's old
+account or password. The demo has completed, closed and editable games plus
+playoff choices, so the main screens have useful examples immediately.
 
-## Production upgrade
+`seed_demo` requires development mode and an empty database. It refuses to replace
+existing data. Choose another unused `SQLITE_DATABASE_PATH` to create another demo.
+The debug-only Django signing key is generated at startup; set a private
+`DJANGO_SECRET_KEY` to keep local sessions across server restarts.
 
-1. Back up the live database privately and record the current deployment revision.
-2. Confirm Python and database versions meet the requirements above before
-   changing the existing virtual environment.
-3. Set `DJANGO_SECRET_KEY` to a new, private random value in the host environment.
-   The old key was committed publicly; do not reuse it or keep it as a fallback.
-   Rotating it signs out existing sessions and invalidates old signed tokens.
-4. Keep `DJANGO_DEBUG=false`. Set `DATABASE_USER`, `DATABASE_PASSWORD`,
-   `DATABASE_HOST`, and optionally `DATABASE_NAME` and `DATABASE_PORT`.
-   `.env.example` lists settings, but the app does not load `.env` automatically.
-   Set them in the WSGI host environment without committing credentials.
-5. In the new Python virtual environment, run:
+## Verify behavior
 
-   ```sh
-   python -m pip install --upgrade pip
-   python -m pip install -r requirements.txt
-   python manage.py check --deploy
-   python manage.py migrate --plan
-   python manage.py migrate
-   python manage.py install_score_views
-   python manage.py collectstatic --noinput
-   ```
+```sh
+python manage.py test --settings=predictor.test_settings
+python manage.py makemigrations --check --dry-run --settings=predictor.test_settings
+```
 
-6. Configure the host's `/static/` mapping to `staticfiles/`, reload the WSGI app,
-   and verify login/logout, an ordinary user's denied score-editor access, a pick
-   save, a locked pick, and the leaderboard. If TLS terminates at a proxy, confirm
-   its header behavior before enabling `DJANGO_TRUST_PROXY_HTTPS=true`; otherwise
-   an incorrect proxy setup can cause HTTPS redirect loops.
+The tests create a separate database. They cover the score calculation in both
+Python and SQL, picks and their deadlines, ownership and scorekeeper permissions,
+signup/login/logout, older password hashes, playoff forms, image validation, and
+a fresh four-player demo including the admin and leaderboard pages.
 
-The deployment check intentionally reports `security.W021`: browser HSTS preload
-is not enabled automatically. HTTPS redirects, secure cookies and a one-hour HSTS
-policy are enabled in production.
+GitHub Actions runs the suite on Python 3.11 and 3.14 with SQLite and Python 3.12
+with MySQL 8.4. It also audits the installed dependencies. Dependabot checks Python
+requirements and GitHub Actions weekly. Vendored jQuery provenance is recorded in
+[static/VENDOR.md](static/VENDOR.md).
 
-MySQL client headers and `pkg-config` are needed to build `mysqlclient`. On macOS,
-the upstream driver documents `brew install mysql-client pkg-config` and setting
-`PKG_CONFIG_PATH` to the installed mysql-client `lib/pkgconfig` directory. The
-SQLite preview intentionally avoids that native dependency.
+## What the compatibility branch changes
 
-`install_score_views` replaces only the `user_scores` and `user_week_results`
-views in the configured database; it does not replace stored fixtures or picks.
-Keep a private copy of the previous view definitions for rollback. Existing
-`results_userweekresult` rows and `UserTotalResult` entries still need season setup.
+- Use supported, patched Django, Pillow, sqlparse and jQuery packages.
+- Restrict match-score editing to `fixtures.change_fixture` or a superuser.
+- Enforce the UI's stated one-hour-before-kickoff pick deadline on every save and
+  use the same boundary for all public pick pages.
+- Reject forged row IDs, fixture reassignment and invalid submissions; show errors.
+- Replace the frozen 2024 week clock with the active schedule or an explicit
+  `SEASON_WEEK_ONE_END` (ISO 8601 Wednesday 05:00 UTC after week one).
+- Repair leaderboard view identifiers, POST logout, and missing-kickoff handling.
+- Add a repeatable local demo and checks for the preserved behavior.
 
-## Competition rules and permissions
+The original `master` history and its pre-fix commit `88e5808` remain intact. Public
+secrets, database exports and bytecode are removed from this branch's files; earlier
+commits still contain them. No old account data is restored for the demo.
 
-- Only a user with `fixtures.change_fixture` (or a superuser) can edit match scores.
-  Grant that permission to trusted scorekeepers through Django admin.
-- A weekly pick closes exactly one hour before kickoff. All public pick routes
-  use that same deadline; each player's own history stays visible to them.
-- The `lock` checkbox retains its existing meaning; it does not change the
-  server-enforced kickoff deadline or scoring rules.
-- Week rollover remains Wednesday at 05:00 UTC. It is inferred from the earliest
-  active week-one fixture, or can be set with the ISO 8601 `SEASON_WEEK_ONE_END`.
-  Mark previous-season fixtures inactive (`changeable=false`) when loading a new
-  schedule. No current-season schedule is fabricated by this upgrade.
-- The leaderboard keeps its existing 30–20 home-team default for blank picks.
-  Its four named player columns and manual season provisioning are existing
-  limitations; new players need explicit setup.
+## Optional MySQL setup
 
-## Exposed data and credentials
+The original database backend remains supported with MySQL 8.0.11+ or MariaDB 10.5+.
+Install `requirements.txt` instead of `requirements-core.txt`, configure
+`DATABASE_ENGINE=mysql` and the `DATABASE_*` environment variables listed in
+`.env.example`, then run `migrate`, `seed_demo` and `runserver` in development mode.
+The native mysqlclient package requires MySQL client headers and pkg-config.
 
-Database dumps and Python bytecode have been removed from the working branch and
-are ignored going forward. Earlier Git commits and existing clones still contain
-them. Review account password resets and invalidate old sessions before returning
-the app to service. The September 2023 SendGrid notice says the exposed email key
-was deleted; configure a fresh key only if email sending is reintroduced.
-Any Git history cleanup requires coordination with people who hold old clones.
+`python manage.py install_score_views` installs or replaces just `user_scores` and
+`user_week_results`. SQLite adapts the original SQL syntax; the scoring definition
+is shared. Use the demo or explicit provisioning for the historic weekly-result
+backing rows. `.env` is not loaded automatically.
 
-## Automated checks
+For MySQL test runs, use a disposable database and `PREDICTOR_TEST_MYSQL=1` with the
+normal database environment settings. Django creates its separate test database.
 
-GitHub Actions checks Python 3.11 and 3.14 against SQLite and runs the same tests,
-real leaderboard-view tests, and a dependency audit against MySQL 8.4. Run MySQL
-tests locally only against a disposable database using `PREDICTOR_TEST_MYSQL=1`
-and the normal `DATABASE_*` settings. Django creates a separate test database.
-Dependabot checks Python requirements and GitHub Actions weekly. Vendored jQuery
-provenance is recorded in `static/VENDOR.md` and needs manual release review.
+Outside development mode the app requires `DJANGO_SECRET_KEY` and enables HTTPS
+redirects and secure cookies. HSTS preload is opt-in. Hosting or deployment is not
+part of this preservation work.

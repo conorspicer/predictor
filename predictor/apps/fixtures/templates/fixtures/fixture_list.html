@@ -31,10 +31,10 @@
   {% for fixture in object_list %}
   	<tr>
       <td>{{ fixture.week }}</td>
-  		<td><img src="{% static fixture.away_team.team_logo %}" style="width:40px;height:40px;">
+          <td><img src="{% static fixture.away_team.team_logo|default:'images/NFL-logo.png' %}" style="width:40px;height:40px;">
   			  {{ fixture.away_team }}</td>
   		<td>{{ fixture.away_score }}      -     {{ fixture.home_score }}</td>
-  		<td><img src="{% static fixture.home_team.team_logo %}" style="width:40px;height:40px;">
+          <td><img src="{% static fixture.home_team.team_logo|default:'images/NFL-logo.png' %}" style="width:40px;height:40px;">
   			  {{ fixture.home_team }}</td>
 
   		<td>{{ fixture.ko_datetime }}</td>

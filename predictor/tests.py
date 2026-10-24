@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta, timezone as datetime_timezone
 from pathlib import Path
 from unittest.mock import patch
-from unittest import skipUnless
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
@@ -339,8 +338,7 @@ class ScheduleWeekTests(TestCase):
         self.assertEqual(get_week(datetime(2026, 9, 16, 5, tzinfo=UTC)), 2)
 
 
-@skipUnless(connection.vendor == 'mysql', 'Leaderboard integration requires MySQL.')
-class MySQLLeaderboardTests(PredictorTestCase):
+class LeaderboardIntegrationTests(PredictorTestCase):
     @classmethod
     def setUpClass(cls):
         # View DDL must run before TestCase opens its transaction on MySQL.
@@ -366,7 +364,7 @@ class MySQLLeaderboardTests(PredictorTestCase):
         self.assertEqual(len(set(UserWeekResult.objects.values_list('pk', flat=True))), 2)
         self.assertEqual(UserTotalResult.objects.get(user=self.user).total_points_scored, 45)
 
-    def test_results_page_renders_against_real_mysql_views(self):
+    def test_results_page_renders_against_real_database_views(self):
         response = self.client.get(reverse('results:all') + '?week=All')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context['valid_picks']), 2)

@@ -52,7 +52,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 DATABASE_ENGINE = os.environ.get('DATABASE_ENGINE', 'mysql')
 if DATABASE_ENGINE == 'sqlite':
     DATABASES = {'default': {
-        'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.environ.get('SQLITE_DATABASE_PATH', str(BASE_DIR / 'db.sqlite3')),
     }}
 elif DATABASE_ENGINE == 'mysql':
     DATABASES = {'default': {
