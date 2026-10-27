@@ -1,176 +1,84 @@
-from django.shortcuts import redirect, render
-from .models import Pick
-from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
+from datetime import timedelta
+
 from django.contrib.auth.decorators import login_required
-from .forms import PickFormSetBase
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import transaction
+from django.shortcuts import redirect, render
+from django.utils import timezone
+from django.views import generic
+
+from predictor.weeks import selected_week
 from scripts.get_week import get_week
-from datetime import datetime, timezone, timedelta
+from .forms import PickFormSetBase
+from .models import Pick
 
 
-# All weeks' picks for logged in user
-class ListSpecificWeekPicks(LoginRequiredMixin, generic.ListView):
-    model = Pick
+def pick_deadline_cutoff():
+    # Public visibility and editing share the same one-hour-before-kickoff boundary.
+    return timezone.now() + timedelta(hours=1)
 
+
+class WeekPicksMixin:
     def get_context_data(self, **kwargs):
-        context = super(ListSpecificWeekPicks, self).get_context_data(**kwargs)
-        q = self.request.GET.get("week", get_week())
-        context['input'] = q
+        context = super().get_context_data(**kwargs)
+        context['input'] = selected_week(self.request)
         return context
 
+    def filter_week(self, queryset):
+        week = selected_week(self.request)
+        if week != 'All':
+            queryset = queryset.filter(fixture__week=week)
+        return queryset.select_related('user', 'fixture__away_team',
+                                       'fixture__home_team').order_by(
+                                           'fixture__ko_datetime', 'fixture_id', 'user_id')
+
+
+class ListSpecificWeekPicks(LoginRequiredMixin, WeekPicksMixin, generic.ListView):
+    model = Pick
+
     def get_queryset(self):
-        # If all selected, don't filter, just order
-        if self.request.GET.get("week") == 'All':
-            queryset = Pick.objects.filter(
-                user=self.request.user,
-                fixture__changeable=1,
-                fixture__ko_datetime__gt=datetime.now(timezone.utc) - timedelta(hours=3)
-            ).order_by('fixture__ko_datetime')
-
-        # if a week is defined, filter on that
-        elif self.request.GET.get("week"):
-            selection = self.request.GET.get("week")
-            queryset = Pick.objects.filter(
-                user=self.request.user,
-                fixture__week=selection,
-                fixture__changeable=1,
-                fixture__ko_datetime__gt=datetime.now(timezone.utc) - timedelta(hours=3)
-            ).order_by('fixture__ko_datetime')
-
-        # otherwise filter to current week
-        else:
-            queryset = Pick.objects \
-                .filter(user=self.request.user,
-                        fixture__changeable=1,
-                        fixture__week=get_week()) \
-                .order_by('fixture__ko_datetime')
-
-        return queryset
+        return self.filter_week(Pick.objects.filter(
+            user=self.request.user, fixture__changeable=True,
+        ))
 
 
-# All Users' picks less than 1hr to KO, in play or completed
-class ListSubmittedWeekPicks(LoginRequiredMixin, generic.ListView):
+class ListSubmittedWeekPicks(LoginRequiredMixin, WeekPicksMixin, generic.ListView):
     model = Pick
     template_name = 'picks/pick_submitted.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(ListSubmittedWeekPicks, self).get_context_data(**kwargs)
-        q = self.request.GET.get("week", get_week())
-        context['input'] = q
-        return context
-
     def get_queryset(self):
-        # If all selected, don't filter, just order
-        if self.request.GET.get("week") == 'All':
-            queryset = Pick.objects.filter(
-                fixture__changeable=1,
-                fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3),
-            ).order_by('fixture__ko_datetime')
-
-        # if a week is defined, filter on that
-        elif self.request.GET.get("week"):
-            selection = self.request.GET.get("week")
-            queryset = Pick.objects.filter(
-                fixture__week=selection,
-                fixture__changeable=1,
-                fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3)
-            ).order_by('fixture__ko_datetime')
-
-        # otherwise filter to current week
-        else:
-            queryset = Pick.objects \
-                .filter(fixture__week=get_week(),
-                        fixture__changeable=1,
-                        fixture__ko_datetime__lt=datetime.now(timezone.utc) - timedelta(hours=3)) \
-                .order_by('fixture__ko_datetime')
-        return queryset
+        return self.filter_week(Pick.objects.filter(
+            fixture__changeable=True,
+            fixture__ko_datetime__lte=pick_deadline_cutoff(),
+        ))
 
 
-# All Users' picks
-class ListAllWeekPicks(LoginRequiredMixin, generic.ListView):
-    model = Pick
+class ListAllWeekPicks(ListSubmittedWeekPicks):
     template_name = 'picks/pick_check.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(ListAllWeekPicks, self).get_context_data(**kwargs)
-        q = self.request.GET.get("week", get_week())
-        context['input'] = q
-        return context
 
-    def get_queryset(self):
-        # If all selected, don't filter, just order
-        if self.request.GET.get("week") == 'All':
-            queryset = Pick.objects \
-                .filter(fixture__changeable=1) \
-                .order_by('fixture__ko_datetime')
-
-        # if a week is defined, filter on that
-        elif self.request.GET.get("week"):
-            selection = self.request.GET.get("week")
-            queryset = Pick.objects \
-                .filter(fixture__week=selection,
-                        fixture__changeable=1) \
-                .order_by('fixture__ko_datetime')
-
-        # otherwise filter to current week
-        else:
-            queryset = Pick.objects \
-                .filter(fixture__week=get_week(),
-                        fixture__changeable=1) \
-                .order_by('fixture__ko_datetime')
-        return queryset
-
-
-# List all picks
-class ListSimpleWeekPicks(LoginRequiredMixin, generic.ListView):
-    model = Pick
+class ListSimpleWeekPicks(ListSubmittedWeekPicks):
     template_name = 'picks/pick_simple.html'
 
-    def get_queryset(self):
-        if self.request.GET.get("week"):
-            selection = self.request.GET.get("week")
-            queryset = Pick.objects \
-                .filter(fixture__week=selection,
-                        fixture__changeable=1) \
-                .order_by('fixture__ko_datetime')
-        else:
-            queryset = Pick.objects \
-                .filter(fixture__changeable=1)\
-                .order_by('fixture__ko_datetime')
-        return queryset
 
-
-# Picks for logged in user, for current week, with >1hr to KO
 @login_required
 def update_picks(request):
+    def editable_picks():
+        return Pick.objects.filter(
+            fixture__changeable=True,
+            fixture__ko_datetime__gt=pick_deadline_cutoff(),
+            user=request.user,
+            fixture__week=get_week(),
+        ).select_related('fixture__away_team', 'fixture__home_team').order_by(
+            'fixture__ko_datetime', 'pk')
+
     if request.method == 'POST':
-        action = request.POST.get('action')
-        this_week = get_week()
-        formset = PickFormSetBase(
-            request.POST,
-            queryset=Pick.objects.filter(
-                fixture__ko_datetime__gt=datetime.now(timezone.utc) - timedelta(hours=5),
-                user=request.user,
-                fixture__week=this_week,
-                fixture__changeable=1,
-            ).order_by('fixture__ko_datetime')
-        )
-
-        print(formset.errors)
-        if formset.is_valid():
-            for form in formset.forms:
-                if action == 'save':
-                    form.save()
-
-        redirect('picks:all')
-
+        with transaction.atomic():
+            formset = PickFormSetBase(request.POST,
+                                     queryset=editable_picks().select_for_update())
+            if formset.is_valid() and request.POST.get('action') == 'save':
+                formset.save()
+                return redirect('picks:all')
     else:
-        formset = PickFormSetBase(
-            queryset=Pick.objects.filter(
-                fixture__changeable=1,
-                fixture__ko_datetime__gt=datetime.now(timezone.utc) - timedelta(hours=5),
-                user=request.user,
-                fixture__week=get_week()).order_by('fixture__ko_datetime')
-        )
-
+        formset = PickFormSetBase(queryset=editable_picks())
     return render(request, 'picks/pick_form.html', {'formset': formset})

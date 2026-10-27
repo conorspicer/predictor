@@ -119,3 +119,13 @@ venv.bak/
 
 
 .DS_Store
+
+# Private database exports and deployment output
+db-backup.sql
+files/*.sql
+files/datadump*.json
+*.sqlite3*
+.env.*
+!.env.example
+staticfiles/
+media/

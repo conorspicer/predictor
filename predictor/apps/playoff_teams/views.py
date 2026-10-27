@@ -2,6 +2,7 @@ from django.views import generic
 from .models import PlayoffPick
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404
 
 
 class PlayoffPickList(LoginRequiredMixin, generic.ListView):
@@ -42,6 +43,6 @@ class PlayoffPickUpdate(LoginRequiredMixin, generic.UpdateView):
     # template_name = 'playoffpick_update.html'
     success_url = reverse_lazy('playoff_teams:all')
 
-    def get_object(self):
-        return PlayoffPick.objects.get(user=self.request.user)
+    def get_object(self, queryset=None):
+        return get_object_or_404(PlayoffPick, user=self.request.user)
 

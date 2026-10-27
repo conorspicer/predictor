@@ -1,6 +1,7 @@
 create or replace view `user_scores` AS
     (SELECT
         `points`.`pick_id` AS `pick_id`,
+        `points`.`fixture_id` AS `fixture_id`,
         `points`.`ko_datetime` AS `ko_datetime`,
         `points`.`home_pick` AS `home_pick`,
         `points`.`away_pick` AS `away_pick`,
@@ -25,6 +26,7 @@ create or replace view `user_scores` AS
     FROM
         (SELECT
             `predictions`.`pick_id` AS `pick_id`,
+                `predictions`.`fixture_id` AS `fixture_id`,
                 `predictions`.`ko_datetime` AS `ko_datetime`,
                 `predictions`.`home_pick` AS `home_pick`,
                 `predictions`.`away_pick` AS `away_pick`,
@@ -69,6 +71,7 @@ create or replace view `user_scores` AS
         FROM
             (SELECT
             `raw_picks`.`pick_id` AS `pick_id`,
+                `raw_picks`.`fixture_id` AS `fixture_id`,
                 `raw_picks`.`ko_datetime` AS `ko_datetime`,
                 `raw_picks`.`home_pick` AS `home_pick`,
                 `raw_picks`.`away_pick` AS `away_pick`,
@@ -102,6 +105,7 @@ create or replace view `user_scores` AS
         FROM
             (SELECT
             `p`.`id` AS `pick_id`,
+                `p`.`fixture_id` AS `fixture_id`,
                 `f`.`ko_datetime` AS `ko_datetime`,
                 (CASE
                     WHEN ISNULL(`p`.`home_pick`) THEN 30
@@ -120,8 +124,8 @@ create or replace view `user_scores` AS
                 `away`.`team_name` AS `away_team_name`,
                 `home`.`team_name` AS `home_team_name`
         FROM
-            ((((`nflpredictor$predictorDB`.`picks_pick` `p`
-        LEFT JOIN `nflpredictor$predictorDB`.`fixtures_fixture` `f` ON ((`p`.`fixture_id` = `f`.`id`)))
-        JOIN `nflpredictor$predictorDB`.`auth_user` `u` ON ((`u`.`id` = `p`.`user_id`)))
-        LEFT JOIN `nflpredictor$predictorDB`.`fixtures_team` `away` ON ((`away`.`id` = `f`.`away_team_id`)))
-        LEFT JOIN `nflpredictor$predictorDB`.`fixtures_team` `home` ON ((`home`.`id` = `f`.`home_team_id`)))) `raw_picks`) `predictions`) `points`)
+            ((((`picks_pick` `p`
+        LEFT JOIN `fixtures_fixture` `f` ON ((`p`.`fixture_id` = `f`.`id`)))
+        JOIN `auth_user` `u` ON ((`u`.`id` = `p`.`user_id`)))
+        LEFT JOIN `fixtures_team` `away` ON ((`away`.`id` = `f`.`away_team_id`)))
+        LEFT JOIN `fixtures_team` `home` ON ((`home`.`id` = `f`.`home_team_id`)))) `raw_picks`) `predictions`) `points`)

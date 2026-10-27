@@ -7,8 +7,9 @@ User = get_user_model()
 
 
 class UserScores(models.Model):
-    pick_id = models.ForeignKey(Pick, on_delete=models.DO_NOTHING, db_column='pick_id')
-    ko_datetime = models.DateTimeField(primary_key=True)
+    pick = models.OneToOneField(Pick, on_delete=models.DO_NOTHING,
+                               db_column='pick_id', primary_key=True)
+    ko_datetime = models.DateTimeField()
     home_pick = models.CharField(max_length=50)
     away_pick = models.CharField(max_length=50)
     locked = models.BooleanField(default=False)
@@ -38,8 +39,9 @@ class UserScores(models.Model):
 
 
 class UserWeekResult(models.Model):
+    id = models.IntegerField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, db_column='user')
-    week = models.PositiveIntegerField(primary_key=True)
+    week = models.PositiveIntegerField()
     user_points = models.PositiveIntegerField(null=True, blank=True,)
 
     class Meta:
@@ -55,7 +57,7 @@ class UserTotalResult(models.Model):
     def _total_points_scored(self):
         counter = 0
         for w in UserWeekResult.objects.filter(user=self.user):
-            counter += w.user_points
+            counter += w.user_points or 0
         return counter
     total_points_scored = property(_total_points_scored)
 

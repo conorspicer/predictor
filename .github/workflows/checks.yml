@@ -1,0 +1,60 @@
+name: Predictor checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  sqlite:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.11', '3.14']
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: requirements*.txt
+      - run: python -m pip install --upgrade pip==26.2.2
+      - run: python -m pip install -r requirements-core.txt
+      - run: python manage.py check --settings=predictor.test_settings
+      - run: python manage.py makemigrations --check --dry-run --settings=predictor.test_settings
+      - run: python manage.py test --settings=predictor.test_settings
+
+  mysql:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: ci-test-only-password
+          MYSQL_ROOT_HOST: '%'
+          MYSQL_DATABASE: predictor_ci
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -pci-test-only-password"
+          --health-interval=10s --health-timeout=5s --health-retries=12
+    env:
+      PREDICTOR_TEST_MYSQL: '1'
+      DATABASE_ENGINE: mysql
+      DATABASE_NAME: predictor_ci
+      DATABASE_USER: root
+      DATABASE_PASSWORD: ci-test-only-password
+      DATABASE_HOST: 127.0.0.1
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update && sudo apt-get install -y default-libmysqlclient-dev pkg-config
+      - run: python -m pip install --upgrade pip==26.2.2
+      - run: python -m pip install -r requirements.txt
+      - run: python manage.py test --settings=predictor.test_settings
+      - run: python -m pip install pip-audit==2.10.1
+      - run: pip-audit --progress-spinner off

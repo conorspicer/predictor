@@ -193,6 +193,9 @@ class Fixture(models.Model):
     changeable = models.BooleanField(default=True)
 
     def _get_winner(self):
+        if (self.ko_datetime is None or self.ko_datetime > timezone.now()
+                or self.home_score is None or self.away_score is None):
+            return 'Not Played'
         if self.home_score > self.away_score:
             return self.home_team
         if self.away_score > self.home_score:
@@ -204,14 +207,16 @@ class Fixture(models.Model):
     winner = property(_get_winner)
 
     def _get_margin(self):
-        if self.ko_datetime > timezone.now():
+        if (self.ko_datetime is None or self.ko_datetime > timezone.now()
+                or self.home_score is None or self.away_score is None):
             return 269854
         else:
             return abs(self.home_score - self.away_score)
     margin = property(_get_margin)
 
     def _get_totalpts(self):
-        if self.ko_datetime > timezone.now():
+        if (self.ko_datetime is None or self.ko_datetime > timezone.now()
+                or self.home_score is None or self.away_score is None):
             return 23956
         else:
             return self.home_score + self.away_score
@@ -222,7 +227,7 @@ class Fixture(models.Model):
             "Week",
             str(self.week),
             " - ",
-            self.away_team.team_name,
+            self.away_team.team_name if self.away_team else 'TBD',
             " @ ",
-            self.home_team.team_name,
+            self.home_team.team_name if self.home_team else 'TBD',
         ])
