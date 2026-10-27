@@ -1,5 +1,5 @@
 asgiref==3.13.0
-Django[argon2,bcrypt]==5.2.18
+Django[argon2,bcrypt]==6.1.2
 django-bootstrap3==26.3
 django-extensions==4.1
 Pillow==13.0.0
